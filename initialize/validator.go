@@ -12,7 +12,6 @@ import (
 )
 
 // 定义一个全局翻译器T
-var trans ut.Translator
 
 func Validator(locale string) {
 
@@ -28,7 +27,7 @@ func Validator(locale string) {
 		// locale 通常取决于 http 请求头的 'Accept-Language'
 		var ok bool
 		// 也可以使用 uni.FindTranslator(...) 传入多个locale进行查找
-		trans, ok = uni.GetTranslator(locale)
+		globalInstance.Translator, ok = uni.GetTranslator(locale)
 		if !ok {
 			globalInstance.SystemLog.Info("设置locale失败")
 			return
@@ -38,11 +37,11 @@ func Validator(locale string) {
 		var err error
 		switch locale {
 		case "en":
-			err = enTranslations.RegisterDefaultTranslations(v, trans)
+			err = enTranslations.RegisterDefaultTranslations(v, globalInstance.Translator)
 		case "zh":
-			err = zhTranslations.RegisterDefaultTranslations(v, trans)
+			err = zhTranslations.RegisterDefaultTranslations(v, globalInstance.Translator)
 		default:
-			err = enTranslations.RegisterDefaultTranslations(v, trans)
+			err = enTranslations.RegisterDefaultTranslations(v, globalInstance.Translator)
 		}
 		if err != nil {
 			globalInstance.SystemLog.Info("设置locale失败")

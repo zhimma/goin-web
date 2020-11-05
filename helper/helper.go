@@ -22,3 +22,24 @@ func GenerateHashString(password string, salt string) (string, error) {
 	return string(hash), err
 
 }
+
+/*func GenerateJwtString(data interface{}) (token string, err error) {
+	c := MyClaims{
+		"username", // 自定义字段
+		jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(), // 过期时间
+			Issuer:    "my-project",                               // 签发人
+		},
+	}
+	tokenData := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token, err = tokenData.SignedString(globalInstance.BaseConfig.Jwt.JwtSecret)
+	return
+}*/
+
+func ParseJwtString() {
+
+}
+
+func ValidateJwtString() {
+
+}

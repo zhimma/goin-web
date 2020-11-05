@@ -1,19 +1,18 @@
 package main
 
 import (
-	ut "github.com/go-playground/universal-translator"
+	"fmt"
 	"github.com/zhimma/goin-web/core"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/initialize"
 )
 
-var trans ut.Translator
-
 func main() {
 	// 加载配置文件
-	globalInstance.Viper = core.Viper()
+	core.Viper()
 	// 注册日志系统
 	globalInstance.SystemLog = core.Zap()
+	fmt.Println(globalInstance.BaseConfig.ZapLog.EncodeLevel)
 
 	// 加载数据验证器
 	initialize.Validator("zh")

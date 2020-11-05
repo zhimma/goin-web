@@ -12,7 +12,7 @@ import (
 
 func Gorm() *gorm.DB {
 	// Gorm 初始化数据库并产生数据库全局变量
-	switch globalInstance.SystemConfig.DbType {
+	switch globalInstance.BaseConfig.System.DbType {
 	case "mysql":
 		return GormMysql()
 	default:

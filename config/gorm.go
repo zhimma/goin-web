@@ -6,7 +6,7 @@ type Mysql struct {
 	Dbname       string `mapstructure:"db-name" json:"dbname" yaml:"db-name"`
 	Username     string `mapstructure:"username" json:"username" yaml:"username"`
 	Password     string `mapstructure:"password" json:"password" yaml:"password"`
-	MaxIdleConns int    `mapstructure:"max_idle_conns" json:"max_idle_conns" yaml:"max_idle_conns"`
-	MaxOpenConns int    `mapstructure:"max_open_conns" json:"max_open_conns" yaml:"max_open_conns"`
-	LogMode      bool   `mapstructure:"log_mode" json:"logMode" yaml:"logger-mode"`
+	MaxIdleConns int    `mapstructure:"max-idle-conns" json:"maxIdleConns" yaml:"max_idle_conns"`
+	MaxOpenConns int    `mapstructure:"max-open-conns" json:"maxOpenConns" yaml:"max_open_conns"`
+	LogMode      bool   `mapstructure:"log-mode" json:"logMode" yaml:"logger-mode"`
 }
