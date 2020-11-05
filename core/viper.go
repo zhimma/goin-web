@@ -14,13 +14,13 @@ func Viper() *viper.Viper {
 	if err != nil {
 		panic(fmt.Errorf("读取配置文件失败：%s\n", err))
 	}
-	if err := v.Unmarshal(&globalInstance.BASE_CONFIG); err != nil {
+	if err := v.Unmarshal(&globalInstance.BaseConfig); err != nil {
 		fmt.Println(err)
 	}
 	v.WatchConfig()
 	v.OnConfigChange(func(in fsnotify.Event) {
 		fmt.Println("配置文件发生变动 ", in.Name)
-		if err := v.Unmarshal(&globalInstance.BASE_CONFIG); err != nil {
+		if err := v.Unmarshal(&globalInstance.BaseConfig); err != nil {
 			fmt.Println(err)
 		}
 	})

@@ -12,7 +12,7 @@ import (
 
 func Gorm() *gorm.DB {
 	// Gorm 初始化数据库并产生数据库全局变量
-	switch globalInstance.SYSTEM.DbType {
+	switch globalInstance.SystemConfig.DbType {
 	case "mysql":
 		return GormMysql()
 	default:
@@ -21,7 +21,7 @@ func Gorm() *gorm.DB {
 }
 
 func GormMysql() *gorm.DB {
-	config := globalInstance.BASE_CONFIG.Mysql
+	config := globalInstance.BaseConfig.Mysql
 	// dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
 	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	dsn := config.Username + ":" + config.Password + "@tcp(" + config.Host + ")/" + config.Dbname + "?" + config.Config
@@ -35,7 +35,7 @@ func GormMysql() *gorm.DB {
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), gormConfig(config.LogMode)); err != nil {
 		fmt.Printf("MySQL启动异常:「%v」\n", err)
-		globalInstance.SYSTERM_LOG.Error("MySQL启动异常", zap.Any("err", err))
+		globalInstance.SystemLog.Error("MySQL启动异常", zap.Any("err", err))
 		os.Exit(0)
 		return nil
 	} else {

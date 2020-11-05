@@ -1,6 +1,7 @@
 package globalInstance
 
 import (
+	"github.com/go-playground/validator/v10"
 	"github.com/spf13/viper"
 	"github.com/zhimma/goin-web/config"
 	"go.uber.org/zap"
@@ -8,9 +9,10 @@ import (
 )
 
 var (
-	VIP         *viper.Viper
-	BASE_CONFIG config.Base
-	SYSTERM_LOG *zap.Logger
-	DB          *gorm.DB
-	SYSTEM      config.System
+	Viper        *viper.Viper
+	BaseConfig   config.Base
+	SystemLog    *zap.Logger
+	DB           *gorm.DB
+	SystemConfig config.System
+	Validator    *validator.Validate
 )

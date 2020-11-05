@@ -1,16 +1,22 @@
 package main
 
 import (
+	ut "github.com/go-playground/universal-translator"
 	"github.com/zhimma/goin-web/core"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/initialize"
 )
 
+var trans ut.Translator
+
 func main() {
 	// 加载配置文件
-	globalInstance.VIP = core.Viper()
+	globalInstance.Viper = core.Viper()
 	// 注册日志系统
-	globalInstance.SYSTERM_LOG = core.Zap()
+	globalInstance.SystemLog = core.Zap()
+
+	// 加载数据验证器
+	initialize.Validator("zh")
 	// 注册mysql
 	globalInstance.DB = initialize.Gorm()
 	db, _ := globalInstance.DB.DB()

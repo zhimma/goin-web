@@ -11,7 +11,7 @@ import (
 var level zapcore.Level
 
 func Zap() (logger *zap.Logger) {
-	switch globalInstance.BASE_CONFIG.ZapLog.Level {
+	switch globalInstance.BaseConfig.ZapLog.Level {
 	case "debug":
 		level = zap.DebugLevel
 	case "info":
@@ -36,7 +36,7 @@ func Zap() (logger *zap.Logger) {
 		logger = zap.New(buildZapCore())
 	}
 
-	if globalInstance.BASE_CONFIG.ZapLog.ShowLine {
+	if globalInstance.BaseConfig.ZapLog.ShowLine {
 		logger.WithOptions(zap.AddCaller())
 	}
 
@@ -49,7 +49,7 @@ func buildZapCore() (core zapcore.Core) {
 
 func getEncoder() zapcore.Encoder {
 
-	if globalInstance.BASE_CONFIG.ZapLog.Format == "json" {
+	if globalInstance.BaseConfig.ZapLog.Format == "json" {
 		return zapcore.NewJSONEncoder(getEncoderConfig())
 	}
 	return zapcore.NewConsoleEncoder(getEncoderConfig())
@@ -62,7 +62,7 @@ func getEncoderConfig() (config zapcore.EncoderConfig) {
 		TimeKey:        "time",
 		NameKey:        "logger",
 		CallerKey:      "caller",
-		StacktraceKey:  globalInstance.BASE_CONFIG.ZapLog.StacktraceKey,
+		StacktraceKey:  globalInstance.BaseConfig.ZapLog.StacktraceKey,
 		LineEnding:     zapcore.DefaultLineEnding,
 		EncodeLevel:    zapcore.LowercaseLevelEncoder,
 		EncodeTime:     CustomTimeEncoder,
@@ -70,13 +70,13 @@ func getEncoderConfig() (config zapcore.EncoderConfig) {
 		EncodeCaller:   zapcore.FullCallerEncoder,
 	}
 	switch {
-	case globalInstance.BASE_CONFIG.ZapLog.EncodeLevel == "LowercaseLevelEncoder": // 小写编码器(默认)
+	case globalInstance.BaseConfig.ZapLog.EncodeLevel == "LowercaseLevelEncoder": // 小写编码器(默认)
 		config.EncodeLevel = zapcore.LowercaseLevelEncoder
-	case globalInstance.BASE_CONFIG.ZapLog.EncodeLevel == "LowercaseColorLevelEncoder": // 小写编码器带颜色
+	case globalInstance.BaseConfig.ZapLog.EncodeLevel == "LowercaseColorLevelEncoder": // 小写编码器带颜色
 		config.EncodeLevel = zapcore.LowercaseColorLevelEncoder
-	case globalInstance.BASE_CONFIG.ZapLog.EncodeLevel == "CapitalLevelEncoder": // 大写编码器
+	case globalInstance.BaseConfig.ZapLog.EncodeLevel == "CapitalLevelEncoder": // 大写编码器
 		config.EncodeLevel = zapcore.CapitalLevelEncoder
-	case globalInstance.BASE_CONFIG.ZapLog.EncodeLevel == "CapitalColorLevelEncoder": // 大写编码器带颜色
+	case globalInstance.BaseConfig.ZapLog.EncodeLevel == "CapitalColorLevelEncoder": // 大写编码器带颜色
 		config.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	default:
 		config.EncodeLevel = zapcore.LowercaseLevelEncoder
@@ -86,5 +86,5 @@ func getEncoderConfig() (config zapcore.EncoderConfig) {
 
 // 自定义日志输出时间格式
 func CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format(globalInstance.BASE_CONFIG.ZapLog.Prefix + "2006/01/02 - 15:04:05"))
+	enc.AppendString(t.Format(globalInstance.BaseConfig.ZapLog.Prefix + "2006/01/02 - 15:04:05"))
 }

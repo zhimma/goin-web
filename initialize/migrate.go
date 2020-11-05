@@ -14,8 +14,8 @@ func Migrate(db *gorm.DB) {
 		database.Admin{},
 	)
 	if err != nil {
-		globalInstance.SYSTERM_LOG.Error("register table failed", zap.Any("err", err))
+		globalInstance.SystemLog.Error("register table failed", zap.Any("err", err))
 		os.Exit(0)
 	}
-	globalInstance.SYSTERM_LOG.Info("migrate table 成功")
+	globalInstance.SystemLog.Info("migrate table 成功")
 }

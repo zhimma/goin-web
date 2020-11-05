@@ -15,9 +15,9 @@ type server interface {
 
 func Run() {
 	router := routers.Routers()
-	address := fmt.Sprintf(":%d", globalInstance.BASE_CONFIG.System.Addr)
+	address := fmt.Sprintf(":%d", globalInstance.BaseConfig.System.Addr)
 	fmt.Printf("服务开始运行，地址为:「%v」\n", address)
-
+	// 加载数据验证器
 	s := serverStart(address, router)
 	fmt.Println(s.ListenAndServe().Error())
 }

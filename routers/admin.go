@@ -9,7 +9,9 @@ import (
 func InitAdminRouter(Router *gin.RouterGroup) {
 	AdminRouter := Router.Group("/admin")
 	{
-		AdminRouter.POST("/login", admin.Index)
+		AdminRouter.POST("/login", admin.Login)
+		AdminRouter.POST("/register", admin.Register)
+		AdminRouter.POST("/logout", admin.Logout)
 	}
 	// 使用中间件
 	AdminRouter.Use(middleware.AdminAuth())
