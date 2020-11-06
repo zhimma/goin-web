@@ -1,8 +1,9 @@
-# Gin-Vue-Admin Global Configuration
+# Gin_Vue_Admin Global Configuration
 
 # jwt configuration
 jwt:
   jwt_secret: 'qmPlus'
+  jwt_ttl: 86400
 
 # zap logger configuration
 zap:
@@ -10,11 +11,11 @@ zap:
   format: 'json'
   prefix: ''
   director: 'storage/logs'
-  link-name: 'latest_log'
-  show-line: true
-  encode-level: 'LowercaseColorLevelEncoder'
-  stacktrace-key: 'stacktrace'
-  log-in-console: true
+  link_name: 'latest_log'
+  show_line: true
+  encode_level: 'LowercaseColorLevelEncoder'
+  stacktrace_key: 'stacktrace'
+  log_in_console: true
 
 # redis configuration
 redis:
@@ -28,38 +29,38 @@ email:
   port: 465
   from: 'xxx@163.com'
   host: 'smtp.163.com'
-  is-ssl: true
+  is_ssl: true
   secret: 'xxx'
   nickname: 'test'
 
 # casbin configuration
 casbin:
-  model-path: './resource/rbac_model.conf'
+  model_path: './resource/rbac_model.conf'
 
 # system configuration
 system:
   env: 'public'  # Change to "develop" to skip authentication for development mode
   addr: 8888
-  db-type: 'mysql'
-  oss-type: 'local'
-  use-multipoint: false
+  db_type: 'mysql'
+  oss_type: 'local'
+  use_multipoint: false
 
 # captcha configuration
 captcha:
-  key-long: 6
-  img-width: 240
-  img-height: 80
+  key_long: 6
+  img_width: 240
+  img_height: 80
 
 # mysql connect configuration
 mysql:
   host: '127.0.0.1:3306'
   config: 'charset=utf8mb4&parseTime=True&loc=Local'
-  db-name: 'db_test'
+  db_name: 'db_test'
   username: 'root'
   password: 'ma123456ma'
-  max-idle-conns: 10
-  max-open-conns: 10
-  log-mode: false
+  max_idle_connections: 10
+  max_open_connections: 10
+  log_mode: false
 
 # local configuration
 local:
@@ -68,9 +69,9 @@ local:
 # qiniu configuration (请自行七牛申请对应的 公钥 私钥 bucket 和 域名地址)
 qiniu:
   zone: 'ZoneHuadong'
-  bucket: 'qm-plus-img'
-  img-path: 'http://qmplusimg.henrongyi.top'
-  use-https: false
-  access-key: '25j8dYBZ2wuiy0yhwShytjZDTX662b8xiFguwxzZ'
-  secret-key: 'pgdbqEsf7ooZh7W3xokP833h3dZ_VecFXPDeG5JY'
-  use-cdn-domains: false
+  bucket: 'qm_plus_img'
+  img_path: 'http://qmplusimg.henrongyi.top'
+  use_https: false
+  access_key: '25j8dYBZ2wuiy0yhwShytjZDTX662b8xiFguwxzZ'
+  secret_key: 'pgdbqEsf7ooZh7W3xokP833h3dZ_VecFXPDeG5JY'
+  use_cdn_domains: false

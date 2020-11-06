@@ -40,8 +40,8 @@ func GormMysql() *gorm.DB {
 		return nil
 	} else {
 		sqlDB, _ := db.DB()
-		sqlDB.SetMaxIdleConns(config.MaxIdleConns)
-		sqlDB.SetMaxOpenConns(config.MaxOpenConns)
+		sqlDB.SetMaxIdleConns(config.MaxIdleConnections)
+		sqlDB.SetMaxOpenConns(config.MaxOpenConnections)
 		return db
 	}
 }

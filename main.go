@@ -12,7 +12,7 @@ func main() {
 	core.Viper()
 	// 注册日志系统
 	globalInstance.SystemLog = core.Zap()
-	fmt.Println(globalInstance.BaseConfig.ZapLog.EncodeLevel)
+	fmt.Println(globalInstance.BaseConfig.Jwt.JwtTtl)
 
 	// 加载数据验证器
 	initialize.Validator("zh")

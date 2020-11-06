@@ -1,12 +1,12 @@
 package admin
 
 import (
-	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"github.com/zhimma/goin-web/database/structure"
 	globalInstance "github.com/zhimma/goin-web/global"
+	"github.com/zhimma/goin-web/helper"
 	"net/http"
-	"time"
 )
 
 type RegisterData struct {
@@ -15,39 +15,29 @@ type RegisterData struct {
 }
 
 func Login(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"name": "马雄飞"})
-}
-
-type SignUpParam struct {
-	Age        uint8  `json:"age" binding:"gte=1,lte=130"`
-	Name       string `json:"name" binding:"required"`
-	Email      string `json:"email" binding:"required,email"`
-	Password   string `json:"password" binding:"required"`
-	RePassword string `json:"re_password" binding:"required,eqfield=Password"`
-}
-
-const TokenExpireDuration = time.Hour * 2
-
-type MyClaims struct {
-	Username string `json:"username"`
-	jwt.StandardClaims
+	// Create the Claims
+	NewStandardClaims()
+	jwtClaims := structure.AdminClaims{
+		ID:             11,
+		Username:       "zhimma",
+		NickName:       "zhimma",
+		StandardClaims: StandardClaims,
+	}
+	token, err := helper.GenerateJwtToken(jwtClaims)
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"error": err,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"msg": token,
+	})
+	return
 }
 
 func Register(c *gin.Context) {
-	/*type UserInfo struct {
-		Id int `json:"id"`
-		jwt.StandardClaims
-	}
-	// Create the Claims
-	jwtClaims := UserInfo{
-		1,
-		jwt.StandardClaims{
-			ExpiresAt: 15000,
-			Issuer:    "goin-web",
-		},
-	}*/
-
-	var u SignUpParam
+	var u RegisterData
 	if err := c.ShouldBind(&u); err != nil {
 		// 获取validator.ValidationErrors类型的errors
 		errs, ok := err.(validator.ValidationErrors)
