@@ -3,9 +3,9 @@ package admin
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/zhimma/goin-web/database/structure"
 	globalInstance "github.com/zhimma/goin-web/global"
-	"github.com/zhimma/goin-web/helper"
+	"github.com/zhimma/goin-web/library/jwt"
+	"github.com/zhimma/goin-web/service"
 	"net/http"
 )
 
@@ -15,15 +15,19 @@ type RegisterData struct {
 }
 
 func Login(c *gin.Context) {
-	// Create the Claims
-	NewStandardClaims()
-	jwtClaims := structure.AdminClaims{
-		ID:             11,
-		Username:       "zhimma",
-		NickName:       "zhimma",
-		StandardClaims: StandardClaims,
+	// 获取jwt结构体实例
+	j := jwtLibrary.JWT{
+		SigningKey:          []byte(globalInstance.BaseConfig.Jwt.JwtSecret),
+		AccessTokenExpires:  globalInstance.BaseConfig.Jwt.JwtTtl,
+		RefreshTokenExpires: globalInstance.BaseConfig.Jwt.JwtRefreshTtl,
 	}
-	token, err := helper.GenerateJwtToken(jwtClaims)
+	tokenDetail, err := j.GenerateJwtToken(1)
+
+	service.CacheUserToken(1, tokenDetail)
+	tokenData := map[string]string{
+		"access_token":  tokenDetail.AccessToken,
+		"refresh_token": tokenDetail.RefreshToken,
+	}
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err,
@@ -31,7 +35,8 @@ func Login(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"msg": token,
+		"data":  tokenDetail,
+		"data2": tokenData,
 	})
 	return
 }

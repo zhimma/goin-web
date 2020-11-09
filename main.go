@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/zhimma/goin-web/core"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/initialize"
@@ -12,8 +11,6 @@ func main() {
 	core.Viper()
 	// 注册日志系统
 	globalInstance.SystemLog = core.Zap()
-	fmt.Println(globalInstance.BaseConfig.Jwt.JwtTtl)
-
 	// 加载数据验证器
 	initialize.Validator("zh")
 	// 注册mysql

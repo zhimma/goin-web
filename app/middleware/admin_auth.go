@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
-	"github.com/zhimma/goin-web/helper"
 	"net/http"
 	"time"
 )
@@ -24,13 +23,15 @@ func AdminAuth() gin.HandlerFunc {
 			return
 		}
 
-		_, err := helper.ParseJwtToken(token)
-		if err != nil {
+		/*tokenInfo, err := helper.ParseJwtToken(token)
+		fmt.Println(tokenInfo)*/
+		// service.AdminUserInfo(tokenInfo.ID)
+		/*if err != nil {
 			message = fmt.Sprintf(message, "ParseTokenError:"+err.Error())
 			response.Unauthorized(message, c)
 			c.Abort()
 			return
-		}
+		}*/
 		//请求前获取当前时间
 		nowTime := time.Now()
 		//请求处理
