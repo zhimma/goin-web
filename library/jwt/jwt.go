@@ -37,13 +37,13 @@ func (j *JWT) GenerateJwtToken(Id uint) (*structure.JwtTokenDetails, error) {
 	// token detail struct
 
 	tokenDetail := &structure.JwtTokenDetails{}
-	tokenDetail.AccessTokenUuid = uuid.New()
-	tokenDetail.RefreshTokenUuid = uuid.New()
+
 	tokenDetail.AccessTokenExpires = j.AccessTokenExpires
 	tokenDetail.RefreshTokenExpires = j.RefreshTokenExpires
 
 	//  access token
 	accessTokenClaims := j.BuildClaims(Id, AccessToken)
+	tokenDetail.AccessTokenUuid = accessTokenClaims.UUID
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, accessTokenClaims)
 	accessTokenString, accessTokenErr := accessToken.SignedString(j.SigningKey)
 
@@ -54,6 +54,7 @@ func (j *JWT) GenerateJwtToken(Id uint) (*structure.JwtTokenDetails, error) {
 
 	// refresh token
 	refreshTokenClaims := j.BuildClaims(Id, RefreshToken)
+	tokenDetail.RefreshTokenUuid = refreshTokenClaims.UUID
 	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshTokenClaims)
 	refreshTokenString, refreshTokenErr := refreshToken.SignedString(j.SigningKey)
 	if refreshTokenErr != nil {
@@ -107,9 +108,9 @@ func (j *JWT) BuildClaims(Id uint, model int) structure.JwtClaims {
 	} else if model == RefreshToken {
 		expiresAt = j.RefreshTokenExpires
 	}
-
 	claimsData := structure.JwtClaims{
-		ID: Id,
+		ID:   Id,
+		UUID: uuid.New(),
 		StandardClaims: jwt.StandardClaims{
 			// Audience:  "",
 			// Id:        "",

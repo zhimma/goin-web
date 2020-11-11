@@ -12,6 +12,7 @@ type JwtTokenDetails struct {
 }
 
 type JwtClaims struct {
-	ID uint
+	ID   uint
+	UUID string
 	jwt.StandardClaims
 }

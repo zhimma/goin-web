@@ -8,7 +8,7 @@ import (
 type Response struct {
 	Code    int         `json:"code"`
 	Data    interface{} `json:"data"`
-	Message string      `json:"message"`
+	Message interface{} `json:"message"`
 }
 
 const (
@@ -16,7 +16,7 @@ const (
 	SUCCESS = 0
 )
 
-func Result(statusCode int, code int, data interface{}, message string, c *gin.Context) {
+func Result(statusCode int, code int, data interface{}, message interface{}, c *gin.Context) {
 	c.JSON(statusCode, Response{
 		code,
 		data,
@@ -39,7 +39,7 @@ func Fail(c *gin.Context) {
 	Result(http.StatusOK, ERROR, map[string]interface{}{}, "操作失败", c)
 }
 
-func FailWithMessage(message string, c *gin.Context) {
+func FailWithMessage(message interface{}, c *gin.Context) {
 	Result(http.StatusOK, ERROR, map[string]interface{}{}, message, c)
 }
 

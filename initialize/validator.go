@@ -9,6 +9,8 @@ import (
 	enTranslations "github.com/go-playground/validator/v10/translations/en"
 	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
 	globalInstance "github.com/zhimma/goin-web/global"
+	"reflect"
+	"strings"
 )
 
 // 定义一个全局翻译器T
@@ -16,6 +18,15 @@ import (
 func Validator(locale string) {
 
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		// 注册一个获取json tag的自定义方法
+		v.RegisterTagNameFunc(func(fld reflect.StructField) string {
+			name := strings.SplitN(fld.Tag.Get("zh"), ",", 2)[0]
+			// fmt.Println(fld.Tag.Get("json"), fld.Tag.Get("zh"))
+			if name == "-" {
+				return ""
+			}
+			return name
+		})
 		zhT := zh.New() // 中文翻译器
 		enT := en.New() // 英文翻译器
 

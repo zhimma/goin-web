@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"github.com/zhimma/goin-web/database"
+	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -11,7 +12,7 @@ import (
 func Migrate(db *gorm.DB) {
 	err := db.AutoMigrate(
 		database.ColumnTypeMean{},
-		database.Admin{},
+		model.Admin{},
 	)
 	if err != nil {
 		globalInstance.SystemLog.Error("register table failed", zap.Any("err", err))

@@ -2,7 +2,7 @@ package seed
 
 import (
 	"fmt"
-	"github.com/zhimma/goin-web/database"
+	"github.com/zhimma/goin-web/database/model"
 	"github.com/zhimma/goin-web/helper"
 	"gorm.io/gorm"
 	"time"
@@ -10,7 +10,7 @@ import (
 
 func Admin(db *gorm.DB) {
 
-	user := database.Admin{
+	user := model.Admin{
 		Account:     "zhimma",
 		Salt:        "1256",
 		Password:    "123456",

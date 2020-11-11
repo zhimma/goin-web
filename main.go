@@ -22,6 +22,9 @@ func main() {
 	// 初始化执行sql seed
 	// initialize.Seeder(globalInstance.DB)
 	defer db.Close()
+
+	// 注册redis
+	initialize.RedisClient()
 	// 	启动服务
 	core.Run()
 }
