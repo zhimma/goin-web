@@ -35,9 +35,9 @@ func Login(c *gin.Context) {
 		Account:  loginParams.Account,
 		Password: loginParams.Password,
 	}
-	adminInfo, err := service.AdminLogin(params)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
+	adminInfo, err1 := service.AdminLogin(params)
+	if err1 != nil {
+		response.FailWithMessage(err1.Error(), c)
 		return
 	}
 	if adminInfo.Status == 0 {
@@ -54,21 +54,26 @@ func Login(c *gin.Context) {
 		AccessTokenExpires:  globalInstance.BaseConfig.Jwt.JwtTtl,
 		RefreshTokenExpires: globalInstance.BaseConfig.Jwt.JwtRefreshTtl,
 	}
-	tokenDetail, err := j.GenerateJwtToken(adminInfo.ID)
-	service.CacheAdminUserToken(1, tokenDetail)
+	tokenDetail, err2 := j.GenerateJwtToken(adminInfo.ID)
+	if err2 != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"error": err2,
+		})
+		return
+	}
+	err3 := service.CacheAdminUserToken(adminInfo.ID, tokenDetail)
+	if err3 != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"error": err3,
+		})
+		return
+	}
 	tokenData := map[string]string{
 		"access_token":  tokenDetail.AccessToken,
 		"refresh_token": tokenDetail.RefreshToken,
 	}
-	if err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"error": err,
-		})
-		return
-	}
 	c.JSON(http.StatusOK, gin.H{
-		"data":  tokenDetail,
-		"data2": tokenData,
+		"data": tokenData,
 	})
 	return
 }
@@ -94,32 +99,6 @@ func Register(c *gin.Context) {
 	// 保存入库等业务逻辑代码...
 
 	c.JSON(http.StatusOK, "success")
-
-	/*var params RegisterData
-	if err := c.ShouldBindJSON(&params); err != nil {
-		// 获取validator.ValidationErrors类型的errors
-		errs, ok := err.(validator.ValidationErrors)
-		if !ok {
-			// 非validator.ValidationErrors类型错误直接返回
-			c.JSON(http.StatusOK, gin.H{
-				"msg": err.Error(),
-			})
-			return
-		}
-		// validator.ValidationErrors类型错误则进行翻译
-		c.JSON(http.StatusOK, gin.H{
-			"msg": errs.Translate(trans),
-		})
-		return
-	}
-	if err := c.ShouldBindJSON(&params); err != nil {
-		fmt.Println(params.Account)
-		c.JSON(http.StatusOK, gin.H{
-			"message": err.Error(),
-		})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"name": "马雄飞"})*/
 }
 func Logout(c *gin.Context) {
 
