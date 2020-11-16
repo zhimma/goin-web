@@ -4,7 +4,7 @@
 jwt:
   jwt_secret: 'qmPlus'
   jwt_refresh_secret: '123'
-  jwt_ttl: 10
+  jwt_ttl: 604800
   jwt_refresh_ttl: 604800 # 86400*7
 
 # zap logger configuration

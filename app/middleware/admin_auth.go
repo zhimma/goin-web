@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
+	jwtLibrary "github.com/zhimma/goin-web/library/jwt"
+	"github.com/zhimma/goin-web/service"
 	"net/http"
 	"time"
 )
@@ -23,15 +25,16 @@ func AdminAuth() gin.HandlerFunc {
 			return
 		}
 
-		/*tokenInfo, err := helper.ParseJwtToken(token)
-		fmt.Println(tokenInfo)*/
-		// service.AdminUserInfo(tokenInfo.ID)
-		/*if err != nil {
+		jwt := jwtLibrary.NewJWT()
+		tokenInfo, err := jwt.ParseJwtToken(token)
+		if err != nil {
 			message = fmt.Sprintf(message, "ParseTokenError:"+err.Error())
 			response.Unauthorized(message, c)
 			c.Abort()
 			return
-		}*/
+		}
+		service.AdminUserInfo(tokenInfo.ID)
+
 		//请求前获取当前时间
 		nowTime := time.Now()
 		//请求处理
@@ -40,6 +43,6 @@ func AdminAuth() gin.HandlerFunc {
 		//处理后获取消耗时间
 		costTime := time.Since(nowTime)
 		url := c.Request.URL.String()
-		fmt.Printf("the request URL %s cost %v\n", url, costTime)
+		fmt.Printf("the request	 URL %s cost %v\n", url, costTime)
 	}
 }

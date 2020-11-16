@@ -21,7 +21,10 @@ const (
 )
 
 var (
-	TokenExpired = errors.New("Token is expired")
+	TokenExpired     = errors.New("Token is expired")
+	TokenMalformed   = errors.New("Token is malformed")
+	TokenNotValidYet = errors.New("Token is not valid yet")
+	TokenInvalid     = errors.New("Token is invalid")
 )
 
 func NewJWT() *JWT {
@@ -65,41 +68,34 @@ func (j *JWT) GenerateJwtToken(Id uint) (*structure.JwtTokenDetails, error) {
 	return tokenDetail, nil
 }
 
-//func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
+func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
 
-/*_, _ := jwt.ParseWithClaims(tokenString, structure.JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
-	return j.SigningKey, nil
-})*/
-/*if err != nil {
-	if ve, ok := err.(*jwt.ValidationError); ok {
-		if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-			return nil, TokenMalformed
-		} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
-			// Token is expired
-			return nil, TokenExpired
-		} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
-			return nil, TokenNotValidYet
-		} else {
-			return nil, TokenInvalid
+	token, err := jwt.ParseWithClaims(tokenString, &structure.JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return j.SigningKey, nil
+	})
+	if err != nil {
+		if ve, ok := err.(*jwt.ValidationError); ok {
+			if ve.Errors&jwt.ValidationErrorMalformed != 0 {
+				return nil, TokenMalformed
+			} else if ve.Errors&jwt.ValidationErrorExpired != 0 {
+				// Token is expired
+				return nil, TokenExpired
+			} else if ve.Errors&jwt.ValidationErrorNotValidYet != 0 {
+				return nil, TokenNotValidYet
+			} else {
+				return nil, TokenInvalid
+			}
 		}
 	}
-}
-return*/
-/*if token.Valid {
-	fmt.Println("You look nice today")
-} else if ve, ok := err.(*jwt.ValidationError); ok {
-	if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-		fmt.Println("That's not even a token")
-	} else if ve.Errors&(jwt.ValidationErrorExpired|jwt.ValidationErrorNotValidYet) != 0 {
-		// Token is either expired or not active yet
-		fmt.Println("Timing is everything")
+	if token != nil {
+		if claims, ok := token.Claims.(*structure.JwtClaims); ok && token.Valid {
+			return claims, nil
+		}
+		return nil, TokenInvalid
 	} else {
-		fmt.Println("Couldn't handle this token:", err)
+		return nil, TokenInvalid
 	}
-} else {
-	fmt.Println("Couldn't handle this token:", err)
-}*/
-//}
+}
 
 func (j *JWT) BuildClaims(Id uint, model int) structure.JwtClaims {
 	var expiresAt int64
@@ -116,8 +112,8 @@ func (j *JWT) BuildClaims(Id uint, model int) structure.JwtClaims {
 			// Id:        "",
 			// IssuedAt:  0,
 			// Subject:   "",
-			NotBefore: time.Now().Unix() - 1000, // 签名生效时间
-			ExpiresAt: expiresAt,                // 过期时间 7天
+			NotBefore: time.Now().Unix() - 1000,      // 签名生效时间
+			ExpiresAt: time.Now().Unix() + expiresAt, // 过期时间 7天
 			Issuer:    "goin-web-admin",
 		},
 	}
