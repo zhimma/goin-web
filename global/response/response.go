@@ -16,12 +16,17 @@ const (
 	SUCCESS = 0
 )
 
-func Result(statusCode int, code int, data interface{}, message interface{}, c *gin.Context) {
-	c.JSON(statusCode, Response{
+func Result(httpCode int, code int, data interface{}, message interface{}, c *gin.Context) {
+	c.JSON(httpCode, Response{
 		code,
 		data,
 		message,
 	})
+}
+
+func Abort(httpCode int, code int, data interface{}, message interface{}, c *gin.Context) {
+	c.Abort()
+	Result(httpCode, code, data, message, c)
 }
 
 func Ok(c *gin.Context) {

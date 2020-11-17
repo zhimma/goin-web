@@ -10,15 +10,23 @@ import (
 	"github.com/zhimma/goin-web/library/jwt"
 	"github.com/zhimma/goin-web/service"
 	"net/http"
+	"time"
 )
 
-type RegisterData struct {
+type LoginData struct {
 	Account  string `json:"account" form:"account" binding:"required" zh:"账号"`
 	Password string `json:"password" form:"account" binding:"required" zh:"密码"`
 }
 
+type RegisterData struct {
+	Account    string `json:"account" form:"account" binding:"required" zh:"账号"`
+	Password   string `json:"password" form:"account" binding:"required" zh:"密码"`
+	RePassword string `json:"RePassword" form:"RePassword" binding:"required,eqfield=Password" zh:"重复密码"`
+}
+
+// 登陆
 func Login(c *gin.Context) {
-	var loginParams RegisterData
+	var loginParams LoginData
 	if err := c.ShouldBindJSON(&loginParams); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
@@ -79,26 +87,56 @@ func Login(c *gin.Context) {
 }
 
 func Register(c *gin.Context) {
+	// 数据检验
 	var u RegisterData
 	if err := c.ShouldBind(&u); err != nil {
 		// 获取validator.ValidationErrors类型的errors
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
 			// 非validator.ValidationErrors类型错误直接返回
-			c.JSON(http.StatusOK, gin.H{
-				"msg": err.Error(),
-			})
+			response.FailWithMessage(err.Error(), c)
 			return
 		}
 		// validator.ValidationErrors类型错误则进行翻译
-		c.JSON(http.StatusOK, gin.H{
-			"msg": errs.Translate(globalInstance.Translator),
-		})
+		response.FailWithMessage(errs.Translate(globalInstance.Translator), c)
 		return
 	}
-	// 保存入库等业务逻辑代码...
 
-	c.JSON(http.StatusOK, "success")
+	// 判断账号是否已经存在
+	checkMap := map[string]interface{}{
+		"Account": u.Account,
+	}
+	if status, err := service.CheckAdminField(checkMap); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	} else {
+		if status == true {
+			response.FailWithMessage("该账号已存在，请更换", c)
+			return
+		}
+	}
+
+	// 注册用户
+	salt := helper.RandStringBytes(4)
+	password, _ := helper.GenerateHashString(u.Password, salt)
+	data := model.Admin{
+		Account:     u.Account,
+		Salt:        salt,
+		Password:    password,
+		Avatar:      "",
+		Name:        u.Account,
+		Phone:       u.Account,
+		Status:      0,
+		LastLoginIp: "",
+		LastLoginAt: time.Now(),
+		LoginTimes:  0,
+	}
+	if err := service.AdminRegister(&data); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("注册成功", c)
+
 }
 func Logout(c *gin.Context) {
 

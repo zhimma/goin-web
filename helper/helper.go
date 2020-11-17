@@ -3,8 +3,10 @@ package helper
 import (
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 func PathExists(path string) (bool, error) {
@@ -42,4 +44,15 @@ func RemoveTopStruct(fields map[string]string) map[string]string {
 		res[field[strings.Index(field, ".")+1:]] = err
 	}
 	return res
+}
+
+func RandStringBytes(n int) string {
+	str := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	bytes := []byte(str)
+	result := []byte{}
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < n; i++ {
+		result = append(result, bytes[r.Intn(len(bytes))])
+	}
+	return string(result)
 }

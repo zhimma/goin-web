@@ -6,6 +6,8 @@ import (
 	"github.com/go-basic/uuid"
 	"github.com/zhimma/goin-web/database/structure"
 	globalInstance "github.com/zhimma/goin-web/global"
+	"net/http"
+	"strings"
 	"time"
 )
 
@@ -97,6 +99,7 @@ func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
 	}
 }
 
+// 构造jwt claims数据
 func (j *JWT) BuildClaims(Id uint, model int) structure.JwtClaims {
 	var expiresAt int64
 	if model == AccessToken {
@@ -105,7 +108,7 @@ func (j *JWT) BuildClaims(Id uint, model int) structure.JwtClaims {
 		expiresAt = j.RefreshTokenExpires
 	}
 	claimsData := structure.JwtClaims{
-		ID:   Id,
+		UID:  Id,
 		UUID: uuid.New(),
 		StandardClaims: jwt.StandardClaims{
 			// Audience:  "",
@@ -118,4 +121,15 @@ func (j *JWT) BuildClaims(Id uint, model int) structure.JwtClaims {
 		},
 	}
 	return claimsData
+}
+
+// 从request中提取token
+func ExtractToken(r *http.Request) string {
+	bearToken := r.Header.Get("Authorization")
+	//normally Authorization the_token_xxx
+	strArr := strings.Split(bearToken, " ")
+	if len(strArr) == 2 {
+		return strArr[1]
+	}
+	return ""
 }

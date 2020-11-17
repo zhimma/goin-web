@@ -15,25 +15,32 @@ func AdminAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		message := "用户登陆失败:" + http.StatusText(http.StatusUnauthorized) + " -「%s」"
+		message = fmt.Sprintf(message, "Unauthorized")
 
-		token := c.Request.Header.Get("authorization")
+		token := jwtLibrary.ExtractToken(c.Request)
 		globalInstance.SystemLog.Info("用户登陆,token:" + token)
 		if token == "" {
 			message = fmt.Sprintf(message, "MissingToken")
-			response.Unauthorized(message, c)
-			c.Abort()
-			return
+			response.Abort(http.StatusUnauthorized, -1, message, message, c)
 		}
 
 		jwt := jwtLibrary.NewJWT()
 		tokenInfo, err := jwt.ParseJwtToken(token)
 		if err != nil {
 			message = fmt.Sprintf(message, "ParseTokenError:"+err.Error())
-			response.Unauthorized(message, c)
-			c.Abort()
-			return
+			response.Abort(http.StatusUnauthorized, -1, message, message, c)
 		}
-		service.AdminUserInfo(tokenInfo.ID)
+
+		// 查询redis中是否存在该token
+		if content, err := service.AdminUserTokenCheck(tokenInfo); err != nil {
+			response.Abort(http.StatusUnauthorized, -1, message, message, c)
+		} else {
+			if content == "" {
+				response.Abort(http.StatusUnauthorized, -1, message, message, c)
+			}
+		}
+		c.Set("UUID", tokenInfo.UUID)
+		c.Set("UID", tokenInfo.UID)
 
 		//请求前获取当前时间
 		nowTime := time.Now()
