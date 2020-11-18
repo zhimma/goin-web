@@ -3,19 +3,29 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zhimma/goin-web/app/http/controllers/admin"
+	"github.com/zhimma/goin-web/app/http/controllers/admin/category"
 	"github.com/zhimma/goin-web/app/middleware"
 )
 
 func InitAdminRouter(Router *gin.RouterGroup) {
-	AdminRouter := Router.Group("/admin")
+	adminRouter := Router.Group("/admin")
 	{
-		AdminRouter.POST("/login", admin.Login)
-		AdminRouter.POST("/register", admin.Register)
-		AdminRouter.POST("/logout", admin.Logout)
+		adminRouter.POST("/login", admin.Login)
+		adminRouter.POST("/register", admin.Register)
+		adminRouter.POST("/logout", admin.Logout)
 	}
 	// 使用中间件
-	AdminRouter.Use(middleware.AdminAuth())
+	testRouters := adminRouter.Use(middleware.AdminAuth())
 	{
-		AdminRouter.POST("/test", admin.TestList)
+		testRouters.POST("/test", admin.TestList)
 	}
+	categoryRouter := adminRouter.Group("/categories")
+	{
+		categoryRouter.GET("", category.Index)
+		categoryRouter.POST("", category.Store)
+		categoryRouter.GET(":id", category.Show)
+		categoryRouter.PUT(":id", category.Update)
+		categoryRouter.DELETE(":id", category.Destroy)
+	}
+
 }

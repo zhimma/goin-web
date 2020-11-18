@@ -13,6 +13,8 @@ func Migrate(db *gorm.DB) {
 	err := db.AutoMigrate(
 		database.ColumnTypeMean{},
 		model.Admin{},
+		model.Article{},
+		model.Category{},
 	)
 	if err != nil {
 		globalInstance.SystemLog.Error("register table failed", zap.Any("err", err))

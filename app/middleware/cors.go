@@ -31,6 +31,7 @@ func Cors() gin.HandlerFunc {
 		}
 		if mark != true {
 			response.Abort(http.StatusForbidden, -1, "Forbidden", "Forbidden", context)
+			return
 		}
 
 		method := context.Request.Method
@@ -42,6 +43,7 @@ func Cors() gin.HandlerFunc {
 
 		if method == "OPTIONS" {
 			response.Abort(http.StatusNoContent, 1, "Passed", "Passed", context)
+			return
 		}
 		// 处理请求
 		context.Next()

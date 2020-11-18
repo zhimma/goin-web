@@ -1,7 +1,6 @@
 package helper
 
 import (
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"math/rand"
 	"os"
@@ -38,7 +37,6 @@ func CompareHashString(hashedPwd string, plainPwd []byte) bool {
 }
 
 func RemoveTopStruct(fields map[string]string) map[string]string {
-	fmt.Println(fields)
 	res := map[string]string{}
 	for field, err := range fields {
 		res[field[strings.Index(field, ".")+1:]] = err

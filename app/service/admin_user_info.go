@@ -10,18 +10,20 @@ import (
 	"time"
 )
 
+// 检查redis中是否存在用户的token
 func AdminUserTokenCheck(tokenInfo *structure.JwtClaims) (string, error) {
 	key := fmt.Sprintf(constant.AdminUserAccessToken, tokenInfo.UID, tokenInfo.UUID)
 	return globalInstance.RedisClient.Get(key).Result()
 }
 
+// 登陆时查询用户信息 by account
 func AdminLogin(admin *model.Admin) (user model.Admin, err error) {
 	var data model.Admin
 	err = globalInstance.DB.Where("account = ?", admin.Account).Find(&data).Error
 	return data, err
 }
 
-// 注册
+// 注册 创建用户
 func AdminRegister(admin *model.Admin) (err error) {
 	err = globalInstance.DB.Create(admin).Error
 	return
@@ -40,7 +42,7 @@ func CheckAdminField(where map[string]interface{}) (status bool, err error) {
 	return false, nil
 }
 
-// 缓存token
+// 缓存token access_token & refresh_token
 func CacheAdminUserToken(uid uint, tokenDetail *structure.JwtTokenDetails) error {
 	at := time.Unix(tokenDetail.AccessTokenExpires, 0) //converting Unix to UTC(to Time object)
 	rt := time.Unix(tokenDetail.RefreshTokenExpires, 0)

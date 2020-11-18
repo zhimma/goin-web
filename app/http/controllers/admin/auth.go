@@ -3,12 +3,12 @@ package admin
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	"github.com/zhimma/goin-web/app/service"
 	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
 	"github.com/zhimma/goin-web/helper"
 	"github.com/zhimma/goin-web/library/jwt"
-	"github.com/zhimma/goin-web/service"
 	"net/http"
 	"time"
 )
@@ -86,6 +86,7 @@ func Login(c *gin.Context) {
 	return
 }
 
+// 注册用户
 func Register(c *gin.Context) {
 	// 数据检验
 	var u RegisterData

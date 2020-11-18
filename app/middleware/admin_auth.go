@@ -3,10 +3,9 @@ package middleware
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	globalInstance "github.com/zhimma/goin-web/global"
+	"github.com/zhimma/goin-web/app/service"
 	"github.com/zhimma/goin-web/global/response"
 	jwtLibrary "github.com/zhimma/goin-web/library/jwt"
-	"github.com/zhimma/goin-web/service"
 	"net/http"
 	"time"
 )
@@ -15,28 +14,31 @@ func AdminAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		message := "用户登陆失败:" + http.StatusText(http.StatusUnauthorized) + " -「%s」"
-		message = fmt.Sprintf(message, "Unauthorized")
 
 		token := jwtLibrary.ExtractToken(c.Request)
-		globalInstance.SystemLog.Info("用户登陆,token:" + token)
 		if token == "" {
 			message = fmt.Sprintf(message, "MissingToken")
-			response.Abort(http.StatusUnauthorized, -1, message, message, c)
+			response.Abort(http.StatusUnauthorized, -1, message, "MissingToken", c)
+			return
 		}
 
 		jwt := jwtLibrary.NewJWT()
 		tokenInfo, err := jwt.ParseJwtToken(token)
 		if err != nil {
 			message = fmt.Sprintf(message, "ParseTokenError:"+err.Error())
-			response.Abort(http.StatusUnauthorized, -1, message, message, c)
+			response.Abort(http.StatusUnauthorized, -1, message, "ParseTokenError", c)
+			return
 		}
 
 		// 查询redis中是否存在该token
+		message = fmt.Sprintf(message, "Unauthorized")
 		if content, err := service.AdminUserTokenCheck(tokenInfo); err != nil {
-			response.Abort(http.StatusUnauthorized, -1, message, message, c)
+			response.Abort(http.StatusUnauthorized, -1, message, "Unauthorized", c)
+			return
 		} else {
 			if content == "" {
 				response.Abort(http.StatusUnauthorized, -1, message, message, c)
+				return
 			}
 		}
 		c.Set("UUID", tokenInfo.UUID)
