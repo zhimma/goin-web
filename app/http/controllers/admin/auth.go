@@ -132,12 +132,13 @@ func Register(c *gin.Context) {
 		LastLoginAt: time.Now(),
 		LoginTimes:  0,
 	}
-	if err := service.AdminRegister(&data); err != nil {
+	if err := service.InsertOne(&data); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
+	} else {
+		response.OkWithData(data, c)
 	}
-	response.OkWithMessage("注册成功", c)
-
+	return
 }
 func Logout(c *gin.Context) {
 

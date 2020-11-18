@@ -1,12 +1,11 @@
 package model
 
 import (
-	"gorm.io/gorm"
 	"time"
 )
 
 type Admin struct {
-	gorm.Model
+	BaseModel
 	Account     string    `json:"account" gorm:"type:varchar(100);default:'';comment:'账号';index"`
 	Salt        string    `json:"salt" gorm:"type:varchar(10);default:'';comment:'盐'"`
 	Password    string    `json:"_" gorm:"type:varchar(100);default:'';comment:'密码'"`
