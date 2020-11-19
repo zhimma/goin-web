@@ -41,7 +41,6 @@ func Index(c *gin.Context) {
 		return
 	}
 	// result := helper.List2Tree(categories, "id", 0, "_child", 0)
-
 	response.OkWithData(categories, c)
 }
 
