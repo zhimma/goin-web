@@ -40,6 +40,7 @@ func Index(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
+
 	// result := helper.List2Tree(categories, "id", 0, "_child", 0)
 	response.OkWithData(categories, c)
 }
