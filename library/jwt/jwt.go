@@ -38,7 +38,7 @@ func NewJWT() *JWT {
 }
 
 // 生产jwt token
-func (j *JWT) GenerateJwtToken(Id uint) (*structure.JwtTokenDetails, error) {
+func (j *JWT) GenerateJwtToken(Id int64) (*structure.JwtTokenDetails, error) {
 	// token detail struct
 
 	tokenDetail := &structure.JwtTokenDetails{}
@@ -100,7 +100,7 @@ func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
 }
 
 // 构造jwt claims数据
-func (j *JWT) BuildClaims(Id uint, model int) structure.JwtClaims {
+func (j *JWT) BuildClaims(Id int64, model int) structure.JwtClaims {
 	var expiresAt int64
 	if model == AccessToken {
 		expiresAt = j.AccessTokenExpires

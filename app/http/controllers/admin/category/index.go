@@ -67,7 +67,7 @@ func Store(c *gin.Context) {
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessageBag, c)
+		response.FailWithMessage(errorMessageBag[0], c)
 		return
 	}
 	data := model.Category{
@@ -97,7 +97,7 @@ func Update(c *gin.Context) {
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessageBag, c)
+		response.FailWithMessage(errorMessageBag[0], c)
 		return
 	}
 	originModel := model.Category{}

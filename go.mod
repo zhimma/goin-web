@@ -3,6 +3,7 @@ module github.com/zhimma/goin-web
 go 1.15
 
 require (
+	github.com/bwmarrin/snowflake v0.3.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/fsnotify/fsnotify v1.4.9
@@ -21,6 +22,7 @@ require (
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible
 	github.com/pelletier/go-toml v1.8.1 // indirect
+	github.com/skyhee/gin-doc-cn v0.0.0-20201115073621-b7af27291ed6 // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/tebeka/strftime v0.1.5 // indirect
 	github.com/ugorji/go v1.1.13 // indirect

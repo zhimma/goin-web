@@ -1,3 +1,4 @@
+// 定于admin user 的通用集合
 package structure
 
 type Admin struct {

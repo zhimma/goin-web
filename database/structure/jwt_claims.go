@@ -1,3 +1,4 @@
+// 此文件用于定于jwt 数据的 struct集合
 package structure
 
 import "github.com/dgrijalva/jwt-go"
@@ -12,7 +13,7 @@ type JwtTokenDetails struct {
 }
 
 type JwtClaims struct {
-	UID  uint
+	UID  int64
 	UUID string
 	jwt.StandardClaims
 }

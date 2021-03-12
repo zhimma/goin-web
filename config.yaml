@@ -13,7 +13,7 @@ zap:
   format: 'json'
   prefix: ''
   director: 'storage/logs'
-  link_name: 'latest_log'
+# link_name: 'latest_log'
   show_line: true
   encode_level: 'LowercaseColorLevelEncoder'
   stacktrace_key: 'stacktrace'
@@ -57,7 +57,7 @@ captcha:
 mysql:
   host: '127.0.0.1:3306'
   config: 'charset=utf8mb4&parseTime=True&loc=Local'
-  db_name: 'db_test'
+  db_name: 'db_goin_web'
   username: 'root'
   password: 'ma123456ma'
   max_idle_connections: 10

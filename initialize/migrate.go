@@ -15,7 +15,13 @@ func Migrate(db *gorm.DB) {
 		model.Admin{},
 		model.Article{},
 		model.Category{},
+		model.Client{},
 	)
+
+	/*if db.Migrator().HasTable(&model.Client{}) {
+		db.Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci comment '客户端表'").AutoMigrate(&model.Client{})
+	}*/
+
 	if err != nil {
 		globalInstance.SystemLog.Error("register table failed", zap.Any("err", err))
 		os.Exit(0)

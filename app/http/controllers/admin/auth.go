@@ -35,7 +35,7 @@ func Login(c *gin.Context) {
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessageBag, c)
+		response.FailWithMessage(errorMessageBag[0], c)
 		return
 	}
 
@@ -62,7 +62,7 @@ func Login(c *gin.Context) {
 		AccessTokenExpires:  globalInstance.BaseConfig.Jwt.JwtTtl,
 		RefreshTokenExpires: globalInstance.BaseConfig.Jwt.JwtRefreshTtl,
 	}
-	tokenDetail, err2 := j.GenerateJwtToken(adminInfo.ID)
+	tokenDetail, err2 := j.GenerateJwtToken(int64(adminInfo.ID))
 	if err2 != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err2,
@@ -99,7 +99,8 @@ func Register(c *gin.Context) {
 			return
 		}
 		// validator.ValidationErrors类型错误则进行翻译
-		response.FailWithMessage(errs.Translate(globalInstance.Translator), c)
+		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
+		response.FailWithMessage(errorMessageBag[0], c)
 		return
 	}
 

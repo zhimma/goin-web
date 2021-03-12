@@ -18,7 +18,7 @@ func AdminAuth() gin.HandlerFunc {
 		token := jwtLibrary.ExtractToken(c.Request)
 		if token == "" {
 			message = fmt.Sprintf(message, "MissingToken")
-			response.Abort(http.StatusUnauthorized, -1, message, "MissingToken", c)
+			response.Abort(http.StatusUnauthorized, -1, message, c)
 			return
 		}
 
@@ -26,18 +26,18 @@ func AdminAuth() gin.HandlerFunc {
 		tokenInfo, err := jwt.ParseJwtToken(token)
 		if err != nil {
 			message = fmt.Sprintf(message, "ParseTokenError:"+err.Error())
-			response.Abort(http.StatusUnauthorized, -1, message, "ParseTokenError", c)
+			response.Abort(http.StatusUnauthorized, -1, message, c)
 			return
 		}
 
 		// 查询redis中是否存在该token
 		message = fmt.Sprintf(message, "Unauthorized")
 		if content, err := service.AdminUserTokenCheck(tokenInfo); err != nil {
-			response.Abort(http.StatusUnauthorized, -1, message, "Unauthorized", c)
+			response.Abort(http.StatusUnauthorized, -1, message, c)
 			return
 		} else {
 			if content == "" {
-				response.Abort(http.StatusUnauthorized, -1, message, message, c)
+				response.Abort(http.StatusUnauthorized, -1, message, c)
 				return
 			}
 		}

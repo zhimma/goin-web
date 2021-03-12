@@ -1,6 +1,7 @@
 package globalInstance
 
 import (
+	"github.com/bwmarrin/snowflake"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-redis/redis"
 	"github.com/zhimma/goin-web/config"
@@ -14,4 +15,5 @@ var (
 	DB          *gorm.DB
 	Translator  ut.Translator
 	RedisClient *redis.Client
+	UniqueId    *snowflake.Node
 )

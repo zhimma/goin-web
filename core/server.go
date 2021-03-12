@@ -14,11 +14,12 @@ type server interface {
 }
 
 func Run() {
-	router := router.Routers()
+	// 自定义中间件组，并且初始化所有的路由
+	engine := router.Routers()
 	address := fmt.Sprintf(":%d", globalInstance.BaseConfig.System.Addr)
-	fmt.Printf("服务开始运行，地址为:「%v」\n", address)
-	// 加载数据验证器
-	s := serverStart(address, router)
+	fmt.Printf("服务开始运行，地址为「%v」\n", address)
+	// 无缝重启、停机
+	s := serverStart(address, engine)
 	fmt.Println(s.ListenAndServe().Error())
 }
 

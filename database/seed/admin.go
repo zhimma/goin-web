@@ -1,3 +1,4 @@
+// 数据填充文件
 package seed
 
 import (

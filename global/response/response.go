@@ -16,7 +16,7 @@ const (
 	SUCCESS = 0
 )
 
-func Result(httpCode int, code int, data interface{}, message interface{}, c *gin.Context) {
+func Result(httpCode int, code int, data interface{}, message string, c *gin.Context) {
 	c.JSON(httpCode, Response{
 		code,
 		data,
@@ -24,30 +24,31 @@ func Result(httpCode int, code int, data interface{}, message interface{}, c *gi
 	})
 }
 
-func Abort(httpCode int, code int, data interface{}, message interface{}, c *gin.Context) {
+func Abort(httpCode int, code int, message string, c *gin.Context) {
 	c.Abort()
+	data := make([]interface{}, 0)
 	Result(httpCode, code, data, message, c)
 }
 
 func Ok(c *gin.Context) {
-	Result(http.StatusOK, SUCCESS, map[string]interface{}{}, "操作成功", c)
+	Result(http.StatusOK, SUCCESS, []interface{}{}, "操作成功", c)
 }
 
 func OkWithMessage(message string, c *gin.Context) {
-	Result(http.StatusOK, SUCCESS, map[string]interface{}{}, message, c)
+	Result(http.StatusOK, SUCCESS, []interface{}{}, message, c)
 }
 
 func OkWithData(data interface{}, c *gin.Context) {
 	Result(http.StatusOK, SUCCESS, data, "操作成功", c)
 }
 func Fail(c *gin.Context) {
-	Result(http.StatusOK, ERROR, map[string]interface{}{}, "操作失败", c)
+	Result(http.StatusOK, ERROR, []interface{}{}, "操作失败", c)
 }
 
-func FailWithMessage(message interface{}, c *gin.Context) {
-	Result(http.StatusOK, ERROR, map[string]interface{}{}, message, c)
+func FailWithMessage(message string, c *gin.Context) {
+	Result(http.StatusOK, ERROR, []interface{}{}, message, c)
 }
 
 func Unauthorized(message string, c *gin.Context) {
-	Result(http.StatusUnauthorized, ERROR, map[string]interface{}{}, message, c)
+	Result(http.StatusUnauthorized, ERROR, []interface{}{}, message, c)
 }

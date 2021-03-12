@@ -1,11 +1,11 @@
 package helper
 
 import (
+	"fmt"
 	"github.com/zhimma/goin-web/database/model"
 	"golang.org/x/crypto/bcrypt"
 	"math/rand"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -40,12 +40,15 @@ func CompareHashString(hashedPwd string, plainPwd []byte) bool {
 }
 
 // validator去除tag
-func RemoveTopStruct(fields map[string]string) map[string]string {
-	res := map[string]string{}
-	for field, err := range fields {
-		res[field[strings.Index(field, ".")+1:]] = err
+func RemoveTopStruct(fields map[string]string) []string {
+	// resMap := map[string]string{}
+	var resSlice []string
+	for _, err := range fields {
+		fmt.Println(err)
+		// resMap[field[strings.Index(field, ".")+1:]] = err
+		resSlice = append(resSlice, err)
 	}
-	return res
+	return resSlice
 }
 
 // 生成随机字符

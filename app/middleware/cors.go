@@ -30,7 +30,7 @@ func Cors() gin.HandlerFunc {
 			}
 		}
 		if mark != true {
-			response.Abort(http.StatusForbidden, -1, "Forbidden", "Forbidden", context)
+			response.Abort(http.StatusForbidden, -1, "Forbidden", context)
 			return
 		}
 
@@ -42,7 +42,7 @@ func Cors() gin.HandlerFunc {
 		context.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
 
 		if method == "OPTIONS" {
-			response.Abort(http.StatusNoContent, 1, "Passed", "Passed", context)
+			response.Abort(http.StatusNoContent, 1, "Passed", context)
 			return
 		}
 		// 处理请求

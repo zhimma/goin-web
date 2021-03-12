@@ -25,6 +25,10 @@ func main() {
 
 	// 注册redis
 	initialize.RedisClient()
+
+	// 注册雪花算法服务
+	initialize.SnowFlake()
+
 	// 	启动服务
 	core.Run()
 }
