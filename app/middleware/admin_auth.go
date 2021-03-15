@@ -18,7 +18,7 @@ func AdminAuth() gin.HandlerFunc {
 		token := jwtLibrary.ExtractToken(c.Request)
 		if token == "" {
 			message = fmt.Sprintf(message, "MissingToken")
-			response.Abort(http.StatusUnauthorized, -1, message, c)
+			response.Abort(http.StatusUnauthorized, message, c)
 			return
 		}
 
@@ -26,23 +26,23 @@ func AdminAuth() gin.HandlerFunc {
 		tokenInfo, err := jwt.ParseJwtToken(token)
 		if err != nil {
 			message = fmt.Sprintf(message, "ParseTokenError:"+err.Error())
-			response.Abort(http.StatusUnauthorized, -1, message, c)
+			response.Abort(http.StatusUnauthorized, message, c)
 			return
 		}
 
 		// 查询redis中是否存在该token
 		message = fmt.Sprintf(message, "Unauthorized")
 		if content, err := service.AdminUserTokenCheck(tokenInfo); err != nil {
-			response.Abort(http.StatusUnauthorized, -1, message, c)
+			response.Abort(http.StatusUnauthorized, message, c)
 			return
 		} else {
 			if content == "" {
-				response.Abort(http.StatusUnauthorized, -1, message, c)
+				response.Abort(http.StatusUnauthorized, message, c)
 				return
 			}
 		}
 		c.Set("UUID", tokenInfo.UUID)
-		c.Set("UID", tokenInfo.UID)
+		c.Set("UID", tokenInfo.IDENTIFIER)
 
 		//请求前获取当前时间
 		nowTime := time.Now()

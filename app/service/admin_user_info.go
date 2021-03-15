@@ -12,7 +12,7 @@ import (
 
 // 检查redis中是否存在用户的token
 func AdminUserTokenCheck(tokenInfo *structure.JwtClaims) (string, error) {
-	key := fmt.Sprintf(constant.AdminUserAccessToken, tokenInfo.UID, tokenInfo.UUID)
+	key := fmt.Sprintf(constant.AdminUserAccessToken, tokenInfo.IDENTIFIER, tokenInfo.UUID)
 	return globalInstance.RedisClient.Get(key).Result()
 }
 
@@ -44,22 +44,15 @@ func CheckAdminField(where map[string]interface{}) (status bool, err error) {
 
 // 缓存token access_token & refresh_token
 func CacheAdminUserToken(uid uint, tokenDetail *structure.JwtTokenDetails) error {
-	at := time.Unix(tokenDetail.AccessTokenExpires, 0) //converting Unix to UTC(to Time object)
-	rt := time.Unix(tokenDetail.RefreshTokenExpires, 0)
+	at := time.Unix(tokenDetail.Expires, 0) //converting Unix to UTC(to Time object)
 	now := time.Now()
-	fmt.Println(at, rt, now, at.Sub(now))
+	fmt.Println(at, now, at.Sub(now))
 
-	accessKey := fmt.Sprintf(constant.AdminUserAccessToken, uid, tokenDetail.AccessTokenUuid)
+	accessKey := fmt.Sprintf(constant.AdminUserAccessToken, uid, tokenDetail.Uuid)
 	errAccess := globalInstance.RedisClient.Set(accessKey, uid, at.Sub(now)).Err()
 	if errAccess != nil {
 		globalInstance.SystemLog.Error("缓存accessToken失败", zap.Any("error", errAccess))
 		return errAccess
-	}
-	refreshKey := fmt.Sprintf(constant.AdminUserRefreshToken, uid, tokenDetail.RefreshTokenUuid)
-	errRefresh := globalInstance.RedisClient.Set(refreshKey, uid, rt.Sub(now)).Err()
-	if errRefresh != nil {
-		globalInstance.SystemLog.Error("缓存refreshToken失败", zap.Any("error", errRefresh))
-		return errRefresh
 	}
 	return nil
 }

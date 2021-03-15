@@ -21,7 +21,7 @@ zap:
 
 # redis configuration
 redis:
-  db: 0
+  db: 5
   addr: '127.0.0.1:6379'
   password: '123456'
 
@@ -62,7 +62,7 @@ mysql:
   password: 'ma123456ma'
   max_idle_connections: 10
   max_open_connections: 10
-  log_mode: false
+  log_mode: true
 
 # local configuration
 local:

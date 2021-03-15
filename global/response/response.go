@@ -6,49 +6,56 @@ import (
 )
 
 type Response struct {
-	Code    int         `json:"code"`
-	Data    interface{} `json:"data"`
-	Message interface{} `json:"message"`
+	Status     string      `json:"status"`
+	HttpCode   int         `json:"httpCode"`
+	StatusCode int         `json:"statusCode"`
+	Data       interface{} `json:"data"`
+	Message    interface{} `json:"message"`
 }
 
 const (
-	ERROR   = -1
-	SUCCESS = 0
+	StatusSuccess     = "success"
+	StatusError       = "error"
+	StatusSuccessCode = 0
+	StatusErrorCode   = -1
 )
 
-func Result(httpCode int, code int, data interface{}, message string, c *gin.Context) {
+func Result(Status string, httpCode int, StatusCode int, data interface{}, message string, c *gin.Context) {
+
 	c.JSON(httpCode, Response{
-		code,
+		Status,
+		httpCode,
+		StatusCode,
 		data,
 		message,
 	})
 }
 
-func Abort(httpCode int, code int, message string, c *gin.Context) {
+func Abort(httpCode int, message string, c *gin.Context) {
 	c.Abort()
 	data := make([]interface{}, 0)
-	Result(httpCode, code, data, message, c)
+	Result(StatusError, httpCode, StatusErrorCode, data, message, c)
 }
 
 func Ok(c *gin.Context) {
-	Result(http.StatusOK, SUCCESS, []interface{}{}, "操作成功", c)
+	Result(StatusSuccess, http.StatusOK, StatusSuccessCode, []interface{}{}, "成功", c)
 }
 
 func OkWithMessage(message string, c *gin.Context) {
-	Result(http.StatusOK, SUCCESS, []interface{}{}, message, c)
+	Result(StatusSuccess, http.StatusOK, StatusSuccessCode, []interface{}{}, message, c)
 }
 
 func OkWithData(data interface{}, c *gin.Context) {
-	Result(http.StatusOK, SUCCESS, data, "操作成功", c)
+	Result(StatusSuccess, http.StatusOK, StatusSuccessCode, data, "成功", c)
 }
 func Fail(c *gin.Context) {
-	Result(http.StatusOK, ERROR, []interface{}{}, "操作失败", c)
+	Result(StatusError, http.StatusOK, StatusErrorCode, []interface{}{}, "失败", c)
 }
 
 func FailWithMessage(message string, c *gin.Context) {
-	Result(http.StatusOK, ERROR, []interface{}{}, message, c)
+	Result(StatusError, http.StatusOK, StatusErrorCode, []interface{}{}, message, c)
 }
 
 func Unauthorized(message string, c *gin.Context) {
-	Result(http.StatusUnauthorized, ERROR, []interface{}{}, message, c)
+	Result(StatusError, http.StatusUnauthorized, http.StatusUnauthorized, []interface{}{}, message, c)
 }

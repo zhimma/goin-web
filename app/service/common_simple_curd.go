@@ -12,7 +12,6 @@ import (
 )
 
 func List(where map[string]interface{}, list interface{}) (err error) {
-
 	err = globalInstance.DB.Where(where).Find(list).Error
 	return err
 }
@@ -48,4 +47,13 @@ func DeleteById(model interface{}) (err error) {
 func ForceDelete(model interface{}) (err error) {
 	err = globalInstance.DB.Unscoped().Delete(model).Error
 	return nil
+}
+
+// 根据条件查询详情
+func DetailByWhere(where map[string]interface{}, model interface{}) error {
+	return globalInstance.DB.Where(where).Find(model).Error
+}
+
+func FirstOrCreate(where map[string]interface{}, model interface{}) error {
+	return globalInstance.DB.FirstOrCreate(model, where).Error
 }

@@ -56,29 +56,17 @@ func Login(c *gin.Context) {
 		response.FailWithMessage("密码错误，请检查后重新登陆", c)
 		return
 	}
-	// 获取jwt结构体实例
-	j := jwtLibrary.JWT{
-		SigningKey:          []byte(globalInstance.BaseConfig.Jwt.JwtSecret),
-		AccessTokenExpires:  globalInstance.BaseConfig.Jwt.JwtTtl,
-		RefreshTokenExpires: globalInstance.BaseConfig.Jwt.JwtRefreshTtl,
-	}
-	tokenDetail, err2 := j.GenerateJwtToken(int64(adminInfo.ID))
+
+	jwt := jwtLibrary.NewJWT()
+	tokenDetail, err2 := jwt.GenerateJwtToken(int64(adminInfo.ID))
 	if err2 != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"error": err2,
 		})
 		return
 	}
-	err3 := service.CacheAdminUserToken(adminInfo.ID, tokenDetail)
-	if err3 != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"error": err3,
-		})
-		return
-	}
 	tokenData := map[string]string{
-		"access_token":  tokenDetail.AccessToken,
-		"refresh_token": tokenDetail.RefreshToken,
+		"access_token": tokenDetail.Token,
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"data": tokenData,

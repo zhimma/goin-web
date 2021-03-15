@@ -12,15 +12,9 @@ import (
 )
 
 type JWT struct {
-	SigningKey          []byte
-	AccessTokenExpires  int64
-	RefreshTokenExpires int64
+	SigningKey []byte
+	Expires    int64
 }
-
-const (
-	AccessToken  = 1
-	RefreshToken = 2
-)
 
 var (
 	TokenExpired     = errors.New("Token is expired")
@@ -31,45 +25,31 @@ var (
 
 func NewJWT() *JWT {
 	return &JWT{
-		SigningKey:          []byte(globalInstance.BaseConfig.Jwt.JwtSecret),
-		AccessTokenExpires:  globalInstance.BaseConfig.Jwt.JwtTtl,
-		RefreshTokenExpires: globalInstance.BaseConfig.Jwt.JwtTtl,
+		SigningKey: []byte(globalInstance.BaseConfig.Jwt.JwtSecret),
+		Expires:    globalInstance.BaseConfig.Jwt.JwtTtl,
 	}
 }
 
 // 生产jwt token
-func (j *JWT) GenerateJwtToken(Id int64) (*structure.JwtTokenDetails, error) {
+func (j *JWT) GenerateJwtToken(identifier interface{}) (*structure.JwtTokenDetails, error) {
 	// token detail struct
-
 	tokenDetail := &structure.JwtTokenDetails{}
-
-	tokenDetail.AccessTokenExpires = j.AccessTokenExpires
-	tokenDetail.RefreshTokenExpires = j.RefreshTokenExpires
-
-	//  access token
-	accessTokenClaims := j.BuildClaims(Id, AccessToken)
-	tokenDetail.AccessTokenUuid = accessTokenClaims.UUID
+	// 赋值过期时间
+	tokenDetail.Expires = j.Expires
+	//  赋值uuid
+	accessTokenClaims := j.BuildClaims(identifier)
+	tokenDetail.Uuid = accessTokenClaims.UUID
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, accessTokenClaims)
 	accessTokenString, accessTokenErr := accessToken.SignedString(j.SigningKey)
-
 	if accessTokenErr != nil {
 		return nil, accessTokenErr
 	}
-	tokenDetail.AccessToken = accessTokenString
-
-	// refresh token
-	refreshTokenClaims := j.BuildClaims(Id, RefreshToken)
-	tokenDetail.RefreshTokenUuid = refreshTokenClaims.UUID
-	refreshToken := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshTokenClaims)
-	refreshTokenString, refreshTokenErr := refreshToken.SignedString(j.SigningKey)
-	if refreshTokenErr != nil {
-		return nil, refreshTokenErr
-	}
-	tokenDetail.RefreshToken = refreshTokenString
-
+	// 赋值access_token
+	tokenDetail.Token = accessTokenString
 	return tokenDetail, nil
 }
 
+// 解析token
 func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
 
 	token, err := jwt.ParseWithClaims(tokenString, &structure.JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
@@ -100,23 +80,17 @@ func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
 }
 
 // 构造jwt claims数据
-func (j *JWT) BuildClaims(Id int64, model int) structure.JwtClaims {
-	var expiresAt int64
-	if model == AccessToken {
-		expiresAt = j.AccessTokenExpires
-	} else if model == RefreshToken {
-		expiresAt = j.RefreshTokenExpires
-	}
+func (j *JWT) BuildClaims(identifier interface{}) structure.JwtClaims {
 	claimsData := structure.JwtClaims{
-		UID:  Id,
-		UUID: uuid.New(),
+		IDENTIFIER: identifier,
+		UUID:       uuid.New(),
 		StandardClaims: jwt.StandardClaims{
 			// Audience:  "",
 			// Id:        "",
 			// IssuedAt:  0,
 			// Subject:   "",
 			NotBefore: time.Now().Unix() - 1000,      // 签名生效时间
-			ExpiresAt: time.Now().Unix() + expiresAt, // 过期时间 7天
+			ExpiresAt: time.Now().Unix() + j.Expires, // 过期时间 7天
 			Issuer:    "goin-web-admin",
 		},
 	}
