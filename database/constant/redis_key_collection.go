@@ -1,8 +1,11 @@
 package constant
 
 const (
-	// 管理后台登陆token key id:uuid
-	AdminUserAccessToken string = "admin:user:access_token:%d:%s"
+	// 管理后台登陆token key id
+	AdminUserAccessToken string = "admin:user:access_token:%d"
+
+	// 管理后台登陆token key id
+	AdminUserInfo string = "admin:user:info:%d"
 
 	/**
 	 * @key_type    字符串

@@ -21,7 +21,6 @@ const (
 )
 
 func Result(Status string, httpCode int, StatusCode int, data interface{}, message string, c *gin.Context) {
-
 	c.JSON(httpCode, Response{
 		Status,
 		httpCode,

@@ -5,7 +5,7 @@
  * @File:  common_simple_curd
  * @Date: 2020/11/18 11:08
  */
-package service
+package CommonDbService
 
 import (
 	globalInstance "github.com/zhimma/goin-web/global"
@@ -23,13 +23,13 @@ func InsertOne(data interface{}) (err error) {
 }
 
 // 根据id获取详情
-func DetailById(data interface{}, id interface{}) (err error) {
+func DetailById(data interface{}, id int64) (err error) {
 	err = globalInstance.DB.First(data, id).Error
 	return err
 }
 
 // 根据id更新
-func UpdateById(model interface{}, id interface{}, data map[string]interface{}) (number interface{}, err error) {
+func UpdateById(model interface{}, id int64, data interface{}) (number int64, err error) {
 	if err := DetailById(model, id); err != nil {
 		return 0, err
 	}
@@ -50,8 +50,8 @@ func ForceDelete(model interface{}) (err error) {
 }
 
 // 根据条件查询详情
-func DetailByWhere(where map[string]interface{}, model interface{}) error {
-	return globalInstance.DB.Where(where).Find(model).Error
+func DetailByMapWhere(where map[string]interface{}, model interface{}) error {
+	return globalInstance.DB.Where(where).First(model).Error
 }
 
 func FirstOrCreate(where map[string]interface{}, model interface{}) error {

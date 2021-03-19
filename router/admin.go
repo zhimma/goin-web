@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zhimma/goin-web/app/http/controllers/admin"
+	"github.com/zhimma/goin-web/app/http/controllers/admin/auth"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/category"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/passport"
 	"github.com/zhimma/goin-web/app/middleware"
@@ -11,9 +12,8 @@ import (
 func InitAdminRouter(Router *gin.RouterGroup) {
 	adminRouter := Router.Group("/admin")
 	{
-		adminRouter.POST("/login", admin.Login)
-		adminRouter.POST("/register", admin.Register)
-		adminRouter.POST("/logout", admin.Logout)
+		adminRouter.POST("/login", auth.Login)
+		adminRouter.POST("/register", auth.Register)
 	}
 
 	passportRouter := Router.Group("/passport")
@@ -22,11 +22,8 @@ func InitAdminRouter(Router *gin.RouterGroup) {
 		passportRouter.POST("/auth", passport.Auth)
 	}
 	// 使用中间件
-	testRouters := adminRouter.Use(middleware.AdminAuth())
-	{
-		testRouters.POST("/test", admin.TestList)
-	}
-	categoryRouter := adminRouter.Group("/categories")
+	Router.POST("/test", admin.TestList)
+	categoryRouter := adminRouter.Group("/categories").Use(middleware.AdminAuth())
 	{
 		categoryRouter.GET("", category.Index)
 		categoryRouter.POST("", category.Store)

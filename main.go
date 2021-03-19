@@ -16,11 +16,10 @@ func main() {
 	// 注册mysql
 	globalInstance.DB = initialize.Gorm()
 	db, _ := globalInstance.DB.DB()
-
 	// 执行数据库迁移
 	initialize.Migrate(globalInstance.DB)
 	// 初始化执行sql seed
-	// initialize.Seeder(globalInstance.DB)
+	initialize.Seeder(globalInstance.DB)
 	defer db.Close()
 
 	// 注册redis

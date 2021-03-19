@@ -7,13 +7,25 @@ jwt:
   jwt_ttl: 86400
   jwt_refresh_ttl: 604800 # 86400*7
 
+wechat:
+  app_id: 'wx4c57bce4fc4352d5'
+  mini_app_id: 'wx4c57bce4fc4352d5'
+  mch_id: '1605737976'
+  notify_url: 'https://service-test.legendage.cn/payment/notify/pay'
+  refund_url: 'https://service-test.legendage.cn/payment/notify/refund'
+  v2_key: 'yldA8GspJXkuJSHJl7axouPzWYu58TfM'
+  v3_key: '9WuIzYGjfVrrWHBZ7ceuXtrmL3gYAWvH'
+  mode: 'service'
+  serial_number: '28EAEACB74EFA55C7D033960B5A096194DFCE57F'
+  wechat_cert_pub: 'certs/wechat-pay/wechat_official_cert_%s.pem'
+  sub_mini_app_id: 'wx4c57bce4fc4352d5'
 # zap logger configuration
 zap:
   level: 'info'
   format: 'json'
   prefix: ''
   director: 'storage/logs'
-# link_name: 'latest_log'
+  # link_name: 'latest_log'
   show_line: true
   encode_level: 'LowercaseColorLevelEncoder'
   stacktrace_key: 'stacktrace'

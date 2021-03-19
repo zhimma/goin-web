@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/zhimma/goin-web/app/service/CommonDbService"
 	"github.com/zhimma/goin-web/database/constant"
 	"github.com/zhimma/goin-web/database/model"
 	"github.com/zhimma/goin-web/database/structure"
@@ -41,7 +42,7 @@ func ApplyClient(params ApplyParams) (data model.Client, error error) {
 		"contact_phone":   params.ContactPhone,
 		"contact_address": params.ContactAddress,
 	}
-	if err := FirstOrCreate(where, &data); err != nil {
+	if err := CommonDbService.FirstOrCreate(where, &data); err != nil {
 		globalInstance.SystemLog.Error("保存用户信息失败", zap.Any("err", err))
 		return model.Client{}, err
 	}

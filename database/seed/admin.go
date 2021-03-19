@@ -3,6 +3,7 @@ package seed
 
 import (
 	"fmt"
+	"github.com/zhimma/goin-web/app/service/CommonDbService"
 	"github.com/zhimma/goin-web/database/model"
 	"github.com/zhimma/goin-web/helper"
 	"gorm.io/gorm"
@@ -10,11 +11,11 @@ import (
 )
 
 func Admin(db *gorm.DB) {
-
 	user := model.Admin{
 		Account:     "zhimma",
 		Salt:        "1256",
 		Password:    "123456",
+		Email:       "mma5694@gmail.com",
 		Avatar:      "",
 		Name:        "马雄飞",
 		Phone:       "18710830000",
@@ -29,8 +30,12 @@ func Admin(db *gorm.DB) {
 		fmt.Printf("密码加密失败：「%v」\n", err)
 	}
 	user.Password = hash
-	if result := db.Create(&user); result.Error != nil {
-		fmt.Printf("填充数据失败：「%v」\n", result.Error)
+	where := map[string]interface{}{
+		"account": user.Account,
+		"email":   user.Email,
+	}
+	if errors := CommonDbService.FirstOrCreate(where, &user); errors != nil {
+		fmt.Printf("填充数据失败：「%v」\n", errors)
 	}
 	fmt.Printf("「%v」数据表填充完成\n", "admin")
 }

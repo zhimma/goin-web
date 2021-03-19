@@ -6,4 +6,5 @@ type Base struct {
 	System System `mapstructure:"system" json:"system" yaml:"system"`
 	Jwt    Jwt    `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
 	Redis  Redis  `mapstructure:"redis" json:"redis" yaml:"redis"`
+	Wechat Wechat `mapstructure:"wechat" json:"wechat" yaml:"wechat"`
 }

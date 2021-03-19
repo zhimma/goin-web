@@ -12,7 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
-	"github.com/zhimma/goin-web/app/service"
+	"github.com/zhimma/goin-web/app/service/CommonDbService"
 	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
@@ -36,7 +36,7 @@ type UpdateCategory struct {
 func Index(c *gin.Context) {
 	where := map[string]interface{}{}
 	var categories []model.Category
-	if err := service.List(where, &categories); err != nil {
+	if err := CommonDbService.List(where, &categories); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -47,9 +47,10 @@ func Index(c *gin.Context) {
 
 // 	分类详情
 func Show(c *gin.Context) {
-	id := c.Param("id")
+	intId := c.Param("id")
+	id, _ := strconv.ParseInt(intId, 10, 64)
 	data := model.Category{}
-	if err := service.DetailById(&data, id); err != nil {
+	if err := CommonDbService.DetailById(&data, id); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -71,12 +72,12 @@ func Store(c *gin.Context) {
 		return
 	}
 	data := model.Category{
-		Pid:         params.Pid,
+		Pid:         int64(params.Pid),
 		Name:        params.Name,
 		Description: params.Description,
 	}
 	// 公共写入
-	if err := service.InsertOne(&data); err != nil {
+	if err := CommonDbService.InsertOne(&data); err != nil {
 		response.FailWithMessage(err.Error(), c)
 	} else {
 		response.OkWithData(data, c)
@@ -87,7 +88,8 @@ func Store(c *gin.Context) {
 
 // 更新分类信息
 func Update(c *gin.Context) {
-	id := c.Param("id")
+	stringId := c.Param("id")
+	id, _ := strconv.ParseInt(stringId, 10, 64)
 	var params CreateCategory
 	// 接受参数
 	if err := c.ShouldBindJSON(&params); err != nil {
@@ -106,7 +108,7 @@ func Update(c *gin.Context) {
 		"name":        params.Name,
 		"description": params.Description,
 	}
-	num, err := service.UpdateById(&originModel, id, updateData)
+	num, err := CommonDbService.UpdateById(originModel, id, updateData)
 
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -118,9 +120,9 @@ func Update(c *gin.Context) {
 func Destroy(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	data := model.Category{
-		BaseModel: model.BaseModel{ID: uint(id)},
+		BaseModel: model.BaseModel{ID: int64(id)},
 	}
-	if err := service.DeleteById(&data); err != nil {
+	if err := CommonDbService.DeleteById(&data); err != nil {
 		response.FailWithMessage(err.Error(), c)
 	}
 	response.OkWithMessage("删除成功", c)
