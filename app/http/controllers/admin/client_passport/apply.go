@@ -1,4 +1,4 @@
-package passport
+package client_passport
 
 import (
 	"github.com/gin-gonic/gin"
