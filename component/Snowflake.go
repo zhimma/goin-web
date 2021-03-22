@@ -1,4 +1,4 @@
-package initialize
+package component
 
 import (
 	"github.com/bwmarrin/snowflake"

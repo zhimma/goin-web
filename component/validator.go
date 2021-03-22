@@ -1,4 +1,4 @@
-package initialize
+package component
 
 import (
 	"github.com/gin-gonic/gin/binding"

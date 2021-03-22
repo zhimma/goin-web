@@ -1,4 +1,4 @@
-package initialize
+package component
 
 import (
 	"github.com/zhimma/goin-web/database"

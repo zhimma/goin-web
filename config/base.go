@@ -7,4 +7,5 @@ type Base struct {
 	Jwt    Jwt    `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
 	Redis  Redis  `mapstructure:"redis" json:"redis" yaml:"redis"`
 	Wechat Wechat `mapstructure:"wechat" json:"wechat" yaml:"wechat"`
+	Casbin Casbin `mapstructure:"casbin" json:"casbin" yaml:"casbin"`
 }

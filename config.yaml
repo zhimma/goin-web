@@ -49,7 +49,7 @@ email:
 
 # casbin configuration
 casbin:
-  model_path: './resource/rbac_model.conf'
+  model_path: './resources/rbac_model.conf'
 
 # system configuration
 system:

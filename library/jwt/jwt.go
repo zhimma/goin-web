@@ -3,7 +3,6 @@ package jwtLibrary
 import (
 	"errors"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/go-basic/uuid"
 	"github.com/zhimma/goin-web/database/structure"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"net/http"
@@ -38,7 +37,6 @@ func (j *JWT) GenerateJwtToken(identifier interface{}) (*structure.JwtTokenDetai
 	tokenDetail.Expires = j.Expires
 	//  赋值uuid
 	accessTokenClaims := j.BuildClaims(identifier)
-	tokenDetail.Uuid = accessTokenClaims.UUID
 	accessToken := jwt.NewWithClaims(jwt.SigningMethodHS256, accessTokenClaims)
 	accessTokenString, accessTokenErr := accessToken.SignedString(j.SigningKey)
 	if accessTokenErr != nil {
@@ -83,7 +81,6 @@ func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
 func (j *JWT) BuildClaims(identifier interface{}) structure.JwtClaims {
 	claimsData := structure.JwtClaims{
 		IDENTIFIER: identifier,
-		UUID:       uuid.New(),
 		StandardClaims: jwt.StandardClaims{
 			// Audience:  "",
 			// Id:        "",

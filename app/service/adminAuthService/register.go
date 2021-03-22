@@ -21,7 +21,7 @@ type RegisterData struct {
 // 检查字段是否存在
 func CheckAdminField(where map[string]interface{}) error {
 	var data model.Admin
-	err := CommonDbService.DetailByMapWhere(where, data)
+	err := CommonDbService.DetailByMapWhere(where, &data)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil
 	} else {

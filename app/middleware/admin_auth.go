@@ -41,7 +41,6 @@ func AdminAuth() gin.HandlerFunc {
 				return
 			}
 		}
-		c.Set("UUID", tokenInfo.UUID)
 		c.Set("UID", tokenInfo.IDENTIFIER)
 
 		//请求前获取当前时间
