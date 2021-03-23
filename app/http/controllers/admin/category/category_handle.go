@@ -92,14 +92,14 @@ func Update(c *gin.Context) {
 	id, _ := strconv.ParseInt(stringId, 10, 64)
 	var params CreateCategory
 	// 接受参数
-	if err := c.ShouldBindJSON(&params); err != nil {
+	if err := c.ShouldBind(&params); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			response.FailWithMessage(err.Error(), c)
+			response.ValidateFail(err.Error(), c)
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessageBag[0], c)
+		response.ValidateFail(errorMessageBag[0], c)
 		return
 	}
 	originModel := model.Category{}

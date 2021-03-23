@@ -17,14 +17,14 @@ import (
 // auth 登陆
 func Auth(c *gin.Context) {
 	authData := service.AuthParams{}
-	if err := c.ShouldBindJSON(&authData); err != nil {
+	if err := c.ShouldBind(&authData); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			response.FailWithMessage(errs.Error(), c)
+			response.ValidateFail(errs.Error(), c)
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessageBag[0], c)
+		response.ValidateFail(errorMessageBag[0], c)
 		return
 	}
 	where := make(map[string]interface{})

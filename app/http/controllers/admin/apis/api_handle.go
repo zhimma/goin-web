@@ -2,7 +2,6 @@ package apis
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	"github.com/zhimma/goin-web/app/service"
 	globalInstance "github.com/zhimma/goin-web/global"
@@ -13,7 +12,7 @@ import (
 
 func Index(c *gin.Context) {
 	var indexData = service.ApiListParams{}
-	if errs := c.ShouldBindBodyWith(&indexData, binding.JSON); errs != nil {
+	if errs := c.ShouldBind(&indexData); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
 			response.ValidateFail(err.Error(), c)
@@ -31,7 +30,7 @@ func Index(c *gin.Context) {
 // 新增api
 func Store(c *gin.Context) {
 	var apiData = service.ApiParams{}
-	if errs := c.ShouldBindJSON(&apiData); errs != nil {
+	if errs := c.ShouldBind(&apiData); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
 			response.ValidateFail(err.Error(), c)
@@ -57,7 +56,7 @@ func Update(c *gin.Context) {
 		response.ValidateFail("获取参数id失败", c)
 	}
 	var apiData = service.ApiParams{}
-	if errs := c.ShouldBindJSON(&apiData); errs != nil {
+	if errs := c.ShouldBind(&apiData); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
 			response.ValidateFail(err.Error(), c)

@@ -11,11 +11,11 @@ import (
 )
 
 type ApiListParams struct {
-	Page       int    `json:"page" form:"page" binding:"required" zh:"页码page"`
-	PageSize   int    `json:"page_size" form:"page_size"  binding:"omitempty" zh:"每页数量page_size"`
-	Path       string `json:"path" form:"path"  binding:"omitempty"`
-	Method     string `json:"method" form:"method"  binding:"omitempty"`
-	ApiGroupId int    `json:"api_group_id" form:"api_group_id"  binding:"omitempty"`
+	Page       int    `json:"page" form:"page"`
+	PageSize   int    `json:"page_size" form:"page_size"`
+	Path       string `json:"path" form:"path"`
+	Method     string `json:"method" form:"method"`
+	ApiGroupId int    `json:"api_group_id" form:"api_group_id"`
 }
 
 type ApiParams struct {

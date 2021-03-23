@@ -13,13 +13,13 @@ import (
 // 管理员登陆
 func Login(c *gin.Context) {
 	loginParams := adminAuthService.LoginParams{}
-	if errs := c.ShouldBindJSON(&loginParams); errs != nil {
+	if errs := c.ShouldBind(&loginParams); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
-			response.FailWithMessage(err.Error(), c)
+			response.ValidateFail(err.Error(), c)
 		}
 		errorMessage := helper.RemoveTopStruct(err.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessage[0], c)
+		response.ValidateFail(errorMessage[0], c)
 		return
 	}
 	// 去登陆
@@ -54,12 +54,12 @@ func Register(c *gin.Context) {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
 			// 非validator.ValidationErrors类型错误直接返回
-			response.FailWithMessage(err.Error(), c)
+			response.ValidateFail(err.Error(), c)
 			return
 		}
 		// validator.ValidationErrors类型错误则进行翻译
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessageBag[0], c)
+		response.ValidateFail(errorMessageBag[0], c)
 		return
 	}
 

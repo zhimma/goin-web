@@ -15,11 +15,11 @@ func Apply(c *gin.Context) {
 	if err := c.ShouldBindJSON(&applyParams); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			response.FailWithMessage(err.Error(), c)
+			response.ValidateFail(err.Error(), c)
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))
-		response.FailWithMessage(errorMessageBag[0], c)
+		response.ValidateFail(errorMessageBag[0], c)
 		return
 	}
 	if data, err := service.ApplyClient(applyParams); err != nil {
