@@ -55,6 +55,10 @@ func FailWithMessage(message string, c *gin.Context) {
 	Result(StatusError, http.StatusOK, StatusErrorCode, []interface{}{}, message, c)
 }
 
+func ValidateFail(message string, c *gin.Context) {
+	Result(StatusError, http.StatusBadRequest, StatusErrorCode, []interface{}{}, message, c)
+}
+
 func Unauthorized(message string, c *gin.Context) {
 	Result(StatusError, http.StatusUnauthorized, http.StatusUnauthorized, []interface{}{}, message, c)
 }

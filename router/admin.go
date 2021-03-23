@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zhimma/goin-web/app/http/controllers/admin"
+	"github.com/zhimma/goin-web/app/http/controllers/admin/api_group"
 	apis "github.com/zhimma/goin-web/app/http/controllers/admin/apis"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/category"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/client_passport"
@@ -26,7 +27,7 @@ func InitAdminRouter(Router *gin.RouterGroup) {
 	Router.POST("/test", admin.TestList)
 
 	// 分类
-	categoryRouter := adminRouter.Group("/categories").Use(middleware.AdminAuth())
+	categoryRouter := Router.Group("/categories").Use(middleware.AdminAuth())
 	{
 		categoryRouter.GET("", category.Index)
 		categoryRouter.POST("", category.Store)
@@ -36,7 +37,8 @@ func InitAdminRouter(Router *gin.RouterGroup) {
 	}
 
 	// 接口管理
-	apisRouter := adminRouter.Group("/apis").Use(middleware.AdminAuth())
+	// apisRouter := Router.Group("/apis").Use(middleware.AdminAuth())
+	apisRouter := Router.Group("/apis")
 	{
 		apisRouter.GET("", apis.Index)
 		apisRouter.POST("", apis.Store)
@@ -44,11 +46,11 @@ func InitAdminRouter(Router *gin.RouterGroup) {
 		apisRouter.DELETE(":id", apis.Destroy)
 	}
 	// 接口组管理
-	apiGroupRouter := adminRouter.Group("api/groups").Use(middleware.AdminAuth())
+	apiGroupRouter := Router.Group("api/groups")
 	{
-		apiGroupRouter.GET("", apis.Index)
-		apiGroupRouter.POST("", apis.Store)
-		apiGroupRouter.PUT(":id", apis.Update)
-		apiGroupRouter.DELETE(":id", apis.Destroy)
+		apiGroupRouter.GET("", api_group.Index)
+		apiGroupRouter.POST("", api_group.Store)
+		apiGroupRouter.PUT(":id", api_group.Update)
+		apiGroupRouter.DELETE(":id", api_group.Destroy)
 	}
 }

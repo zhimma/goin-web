@@ -17,6 +17,7 @@ func Migrate(db *gorm.DB) {
 		model.Category{},
 		model.Client{},
 		model.Api{},
+		model.ApiGroup{},
 	)
 
 	/*if db.Migrator().HasTable(&model.Client{}) {
