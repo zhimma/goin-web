@@ -1,0 +1,15 @@
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:54:56","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:54:56","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:55:20","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:55:20","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[31merror\u001b[0m","time":"2021/03/23 - 13:55:43","message":"修改api失败","err":"unsupported data type: 0xc00043c880: Table not set, please set it like: db.Model(&user) or db.Table(\"users\")"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:56:20","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:56:20","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[31merror\u001b[0m","time":"2021/03/23 - 13:56:21","message":"修改api失败","err":"unsupported data type: 0xc0004fa290: Table not set, please set it like: db.Model(&user) or db.Table(\"users\")"}
+{"level":"\u001b[31merror\u001b[0m","time":"2021/03/23 - 13:56:28","message":"修改api失败","err":"unsupported data type: 0xc0004fa780: Table not set, please set it like: db.Model(&user) or db.Table(\"users\")"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:57:05","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:57:05","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:57:58","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:57:58","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:59:51","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/23 - 13:59:51","message":"redis connect ping response:","pong":"PONG"}

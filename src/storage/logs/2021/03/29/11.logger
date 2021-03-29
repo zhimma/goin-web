@@ -1,0 +1,2 @@
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/29 - 11:29:59","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/29 - 11:29:59","message":"redis connect ping response:","pong":"PONG"}

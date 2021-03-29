@@ -1,0 +1,81 @@
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:13:09","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:13:09","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:13:16","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:13:16","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:14:01","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:14:01","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:14:10","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:14:10","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:14:49","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:14:49","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:15:22","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:15:22","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:16:31","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:16:31","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:16:42","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:16:42","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:17:47","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:17:47","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:17:55","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:17:55","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:18:37","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:18:37","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:19:35","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:19:35","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:19:58","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:19:58","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:22:12","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:22:12","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:22:41","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:22:41","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:22:56","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:22:56","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:23:02","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:23:02","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:23:14","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:23:14","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:23:51","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:23:51","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:25:54","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:25:54","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:26:02","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:26:02","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:26:31","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:26:31","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:26:50","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:26:50","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:27:53","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:27:53","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:28:35","message":"用户登陆,token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVVVJRCI6IjMwMDI1YjZiLTkyOGQtNDIyYi0wOWJhLWE4ZjI2ZDhjYTVkNiIsImV4cCI6MTYwNjEyNzI4NiwiaXNzIjoiZ29pbi13ZWItYWRtaW4iLCJuYmYiOjE2MDU1MjE0ODZ9.mNihLUp1Z3TkmYswOrs4NMYcJ7TfFkr5kCOuo8WWukI"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:28:43","message":"用户登陆,token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVVVJRCI6ImFjOWM4Yjg5LTY0M2EtNTZkYS0zMjNmLWY5NzQ3NmZhODUzZCIsImV4cCI6MTYwNTY4MDkwOSwiaXNzIjoiZ29pbi13ZWItYWRtaW4iLCJuYmYiOjE2MDU1OTM1MDl9.ZomE7y9p4k0I_FWHV-AP8DWcstnWoqNA_ifAwUHXwy0"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:29:16","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:29:16","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:35:46","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:35:46","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:35:48","message":"用户登陆,token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVVVJRCI6ImFjOWM4Yjg5LTY0M2EtNTZkYS0zMjNmLWY5NzQ3NmZhODUzZCIsImV4cCI6MTYwNTY4MDkwOSwiaXNzIjoiZ29pbi13ZWItYWRtaW4iLCJuYmYiOjE2MDU1OTM1MDl9.ZomE7y9p4k0I_FWHV-AP8DWcstnWoqNA_ifAwUHXwy0"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:36:59","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:36:59","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:37:04","message":"用户登陆,token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVVVJRCI6ImFjOWM4Yjg5LTY0M2EtNTZkYS0zMjNmLWY5NzQ3NmZhODUzZCIsImV4cCI6MTYwNTY4MDkwOSwiaXNzIjoiZ29pbi13ZWItYWRtaW4iLCJuYmYiOjE2MDU1OTM1MDl9.ZomE7y9p4k0I_FWHV-AP8DWcstnWoqNA_ifAwUHXwy0"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:39:18","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:39:18","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:39:22","message":"用户登陆,token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVVVJRCI6ImFjOWM4Yjg5LTY0M2EtNTZkYS0zMjNmLWY5NzQ3NmZhODUzZCIsImV4cCI6MTYwNTY4MDkwOSwiaXNzIjoiZ29pbi13ZWItYWRtaW4iLCJuYmYiOjE2MDU1OTM1MDl9.ZomE7y9p4k0I_FWHV-AP8DWcstnWoqNA_ifAwUHXwy0"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:41:20","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:41:20","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:42:46","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:42:46","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:45:06","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:45:06","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:46:30","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:46:30","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:48:20","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:48:20","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:51:09","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:51:09","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:55:14","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:55:14","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:57:56","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:57:56","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:58:03","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:58:03","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:58:26","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2020/11/17 - 14:58:26","message":"redis connect ping response:","pong":"PONG"}

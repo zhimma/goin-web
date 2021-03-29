@@ -1,0 +1,4 @@
+{"level":"error","time":"2020/10/30 - 23:00:46","message":"MySQL启动异常","err":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
+{"level":"error","time":"2020/10/30 - 23:00:57","message":"MySQL启动异常","err":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
+{"level":"error","time":"2020/10/30 - 23:01:15","message":"MySQL启动异常","err":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
+{"level":"error","time":"2020/10/30 - 23:02:24","message":"MySQL启动异常","err":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}

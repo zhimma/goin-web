@@ -1,0 +1,6 @@
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/26 - 18:03:06","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/26 - 18:03:06","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/26 - 18:06:29","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/26 - 18:06:29","message":"redis connect ping response:","pong":"PONG"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/26 - 18:22:56","message":"migrate table 成功"}
+{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/26 - 18:22:56","message":"redis connect ping response:","pong":"PONG"}

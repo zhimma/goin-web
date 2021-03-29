@@ -1,0 +1,8 @@
+{"level":"info","time":"[zhimma]2020/10/30 - 22:25:13","message":"hello world"}
+{"level":"info","time":"2020/10/30 - 22:26:01","message":"hello world "}
+{"level":"info","time":"2020/10/30 - 22:26:54","message":"hello world "}
+{"level":"info","time":"2020/10/30 - 22:27:16","message":"hello world "}
+{"level":"info","time":"2020/10/30 - 22:27:18","message":"hello world "}
+{"level":"error","time":"2020/10/30 - 22:58:06","message":"MySQL启动异常","err":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
+{"level":"error","time":"2020/10/30 - 22:58:23","message":"MySQL启动异常","err":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
+{"level":"error","time":"2020/10/30 - 22:59:57","message":"MySQL启动异常","err":"Error 1045: Access denied for user 'root'@'localhost' (using password: YES)"}
