@@ -31,7 +31,7 @@ func Store(c *gin.Context) {
 	if errs := c.ShouldBindJSON(&apiData); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
-			response.ValidateFail(err.Error(), c)
+			response.FailWithMessage(errs.Error(), c)
 			return
 		}
 

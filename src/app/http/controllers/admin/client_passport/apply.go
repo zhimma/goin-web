@@ -15,7 +15,7 @@ func Apply(c *gin.Context) {
 	if err := c.ShouldBindJSON(&applyParams); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			response.ValidateFail(err.Error(), c)
+			response.FailWithMessage(err.Error(), c)
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))

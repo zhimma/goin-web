@@ -20,7 +20,7 @@ func Auth(c *gin.Context) {
 	if err := c.ShouldBind(&authData); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
-			response.ValidateFail(errs.Error(), c)
+			response.FailWithMessage(err.Error(), c)
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(errs.Translate(globalInstance.Translator))

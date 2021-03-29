@@ -16,7 +16,7 @@ func Login(c *gin.Context) {
 	if errs := c.ShouldBind(&loginParams); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
-			response.ValidateFail(err.Error(), c)
+			response.FailWithMessage(errs.Error(), c)
 		}
 		errorMessage := helper.RemoveTopStruct(err.Translate(globalInstance.Translator))
 		response.ValidateFail(errorMessage[0], c)
@@ -54,7 +54,7 @@ func Register(c *gin.Context) {
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
 			// 非validator.ValidationErrors类型错误直接返回
-			response.ValidateFail(err.Error(), c)
+			response.FailWithMessage(err.Error(), c)
 			return
 		}
 		// validator.ValidationErrors类型错误则进行翻译

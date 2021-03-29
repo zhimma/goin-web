@@ -11,11 +11,11 @@ import (
 )
 
 type ApiListParams struct {
-	Page       int    `json:"page" form:"page"`
-	PageSize   int    `json:"page_size" form:"page_size"`
-	Path       string `json:"path" form:"path"`
-	Method     string `json:"method" form:"method"`
-	ApiGroupId int    `json:"api_group_id" form:"api_group_id"`
+	Page       int    `json:"page" form:"page" binding:"-"`
+	PageSize   int    `json:"page_size" form:"page_size" binding:"-"`
+	Path       string `json:"path" form:"path" binding:"-"`
+	Method     string `json:"method" form:"method" binding:"-"`
+	ApiGroupId int    `json:"api_group_id" form:"api_group_id" binding:"-"`
 }
 
 type ApiParams struct {
@@ -25,7 +25,7 @@ type ApiParams struct {
 	ApiGroupId  int64  `json:"api_group_id" binding:"required" zh:"api所属组"`
 }
 
-func ApiList(params ApiListParams) (result interface{}) {
+func ApiList(params ApiListParams) (result CommonDbService.PageResult) {
 	condition := CommonDbService.PageStruct{
 		Page:         params.Page,
 		PageSize:     params.PageSize,
@@ -44,7 +44,7 @@ func ApiList(params ApiListParams) (result interface{}) {
 	if len(params.Path) > 0 {
 		condition.LikeMapWhere["path"] = params.Path
 	}
-	var data []model.Api
+	var data = make([]model.Api, 0, condition.PageSize)
 	result = CommonDbService.Paginate(condition, &data)
 	return
 }

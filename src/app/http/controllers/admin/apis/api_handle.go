@@ -59,7 +59,7 @@ func Update(c *gin.Context) {
 	if errs := c.ShouldBind(&apiData); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
-			response.ValidateFail(err.Error(), c)
+			response.ValidateFail(errs.Error(), c)
 			return
 		}
 		errorMessageBag := helper.RemoveTopStruct(err.Translate(globalInstance.Translator))

@@ -9,7 +9,6 @@ import (
 	"github.com/zhimma/goin-web/app/http/controllers/admin/category"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/client_passport"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/passport"
-	"github.com/zhimma/goin-web/app/middleware"
 )
 
 func InitAdminRouter(Router *gin.RouterGroup) {
@@ -30,7 +29,7 @@ func InitAdminRouter(Router *gin.RouterGroup) {
 	Router.POST("/test", admin.TestList)
 
 	// 分类
-	categoryRouter := Router.Group("/categories").Use(middleware.AdminAuth())
+	categoryRouter := Router.Group("/categories")
 	{
 		categoryRouter.GET("", category.Index)
 		categoryRouter.POST("", category.Store)

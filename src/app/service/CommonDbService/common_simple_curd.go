@@ -93,9 +93,9 @@ func toPage(page int, pageSize int, where map[string]interface{}, likeWhereStrin
 	return func(db *gorm.DB) *gorm.DB {
 		offset := (page - 1) * pageSize
 		if len(where) > 0 {
-			return globalInstance.DB.Where(where).Where(likeWhereString).Offset(offset).Limit(pageSize)
+			return db.Where(where).Where(likeWhereString).Offset(offset).Limit(pageSize)
 		}
-		return globalInstance.DB.Offset(offset).Where(likeWhereString).Limit(pageSize)
+		return db.Offset(offset).Where(likeWhereString).Limit(pageSize)
 	}
 }
 
