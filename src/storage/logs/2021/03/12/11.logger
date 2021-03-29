@@ -1,7 +1,0 @@
-{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/12 - 11:03:05","message":"migrate table 成功"}
-{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/12 - 11:03:05","message":"redis connect ping response:","pong":"PONG"}
-{"level":"\u001b[31merror\u001b[0m","time":"2021/03/12 - 11:05:01","message":"MySQL启动异常","err":"Error 1049: Unknown database 'db_goin_web'"}
-{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/12 - 11:05:37","message":"migrate table 成功"}
-{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/12 - 11:05:37","message":"redis connect ping response:","pong":"PONG"}
-{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/12 - 11:57:05","message":"migrate table 成功"}
-{"level":"\u001b[34minfo\u001b[0m","time":"2021/03/12 - 11:57:05","message":"redis connect ping response:","pong":"PONG"}
