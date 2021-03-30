@@ -32,16 +32,18 @@ func AdminAuth() gin.HandlerFunc {
 
 		// 查询redis中是否存在该token
 		message = fmt.Sprintf(message, "Unauthorized")
-		if content, err := adminAuthService.AdminUserTokenCheck(tokenInfo); err != nil {
+		content, errs := adminAuthService.AdminUserTokenCheck(tokenInfo)
+		if errs != nil {
 			response.Abort(http.StatusUnauthorized, message, c)
 			return
-		} else {
-			if content == "" {
-				response.Abort(http.StatusUnauthorized, message, c)
-				return
-			}
 		}
-		c.Set("UID", tokenInfo.IDENTIFIER)
+		if content == "" {
+			response.Abort(http.StatusUnauthorized, message, c)
+			return
+		}
+		originUserData, _ := adminAuthService.GetAdminInfoFromCache(tokenInfo.IDENTIFIER)
+		userInfo := originUserData["userInfo"]
+		c.Set("adminInfo", userInfo)
 
 		//请求前获取当前时间
 		nowTime := time.Now()
@@ -53,4 +55,5 @@ func AdminAuth() gin.HandlerFunc {
 		url := c.Request.URL.String()
 		fmt.Printf("the request	 URL %s cost %v\n", url, costTime)
 	}
+
 }

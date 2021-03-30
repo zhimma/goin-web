@@ -8,7 +8,7 @@ import (
 func Routers() *gin.Engine {
 	var Router = gin.New()
 	Router.Use(middleware.Cors())
-	AdminGroup := Router.Group("")
+	AdminGroup := Router.Group("admin")
 	// 初始化所有的路由
 	InitAdminRouter(AdminGroup)
 	return Router

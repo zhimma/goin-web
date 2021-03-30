@@ -1,7 +1,6 @@
 package role
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/zhimma/goin-web/app/service"
@@ -14,7 +13,6 @@ import (
 // 角色列表
 func Index(c *gin.Context) {
 	params := service.RoleListParams{}
-	fmt.Println(c.GetHeader("Content-Type"))
 	if errs := c.Bind(&params); errs != nil {
 		validateErr, ok := errs.(validator.ValidationErrors)
 		if !ok {
@@ -25,7 +23,6 @@ func Index(c *gin.Context) {
 		response.ValidateFail(errorMessageBag[0], c)
 		return
 	}
-	fmt.Println(params)
 	data := service.RoleList(params)
 	response.OkWithData(data, c)
 	return

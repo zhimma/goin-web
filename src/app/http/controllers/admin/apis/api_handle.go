@@ -1,12 +1,17 @@
 package apis
 
 import (
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/zhimma/goin-web/app/service"
+	"github.com/zhimma/goin-web/app/service/CommonDbService"
+	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
 	"github.com/zhimma/goin-web/helper"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 	"strconv"
 )
 
@@ -45,6 +50,27 @@ func Store(c *gin.Context) {
 		return
 	}
 	response.Ok(c)
+	return
+}
+
+// 查询
+func Show(c *gin.Context) {
+	stringId := c.Param("id")
+	id, err := strconv.ParseInt(stringId, 10, 64)
+	if err != nil {
+		response.ValidateFail("获取参数id失败", c)
+	}
+	data := model.Api{}
+	if err := CommonDbService.DetailById(&data, id); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			response.FailWithMessage("获取接口详情失败", c)
+			return
+		}
+		globalInstance.SystemLog.Error("获取接口详情失败", zap.Any("err", err))
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithData(data, c)
 	return
 }
 

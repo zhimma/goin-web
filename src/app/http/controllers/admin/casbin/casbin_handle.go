@@ -1,5 +1,0 @@
-package casbin
-
-func AddRole() {
-
-}

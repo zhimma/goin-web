@@ -11,6 +11,6 @@ type JwtTokenDetails struct {
 
 // 荷载 payload
 type JwtClaims struct {
-	IDENTIFIER interface{}
+	IDENTIFIER int64
 	jwt.StandardClaims
 }

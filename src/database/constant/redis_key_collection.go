@@ -2,10 +2,10 @@ package constant
 
 const (
 	// 管理后台登陆token key id
-	AdminUserAccessToken string = "admin:user:access_token:%d"
+	AdminUserAccessToken string = "admin:user:access_token:%v"
 
 	// 管理后台登陆token key id
-	AdminUserInfo string = "admin:user:info:%d"
+	AdminUserInfo string = "admin:user:info:%v"
 
 	/**
 	 * @key_type    字符串
@@ -19,14 +19,14 @@ const (
 	 * @description 管理员用户信息
 	 * @data        %s 用户client_id
 	 */
-	ClientAuthToken string = "passport:client:auth_token:%d"
+	ClientAuthToken string = "passport:client:auth_token:%v"
 
 	/**
 	 * @key_type    string
 	 * @description 管理员用户信息
 	 * @data        %s 用户id
 	 */
-	ClientInfo = "passport:client:info:%d"
+	ClientInfo = "passport:client:info:%v"
 
 	/**
 	 * @key_type    string

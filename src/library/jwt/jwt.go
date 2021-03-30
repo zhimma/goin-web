@@ -30,7 +30,7 @@ func NewJWT() *JWT {
 }
 
 // 生产jwt token
-func (j *JWT) GenerateJwtToken(identifier interface{}) (*structure.JwtTokenDetails, error) {
+func (j *JWT) GenerateJwtToken(identifier int64) (*structure.JwtTokenDetails, error) {
 	// token detail struct
 	tokenDetail := &structure.JwtTokenDetails{}
 	// 赋值过期时间
@@ -78,7 +78,7 @@ func (j *JWT) ParseJwtToken(tokenString string) (*structure.JwtClaims, error) {
 }
 
 // 构造jwt claims数据
-func (j *JWT) BuildClaims(identifier interface{}) structure.JwtClaims {
+func (j *JWT) BuildClaims(identifier int64) structure.JwtClaims {
 	claimsData := structure.JwtClaims{
 		IDENTIFIER: identifier,
 		StandardClaims: jwt.StandardClaims{

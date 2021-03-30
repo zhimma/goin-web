@@ -80,7 +80,7 @@ func CacheClientInfo(client *model.Client) error {
 }
 
 // 生成客户端登陆token
-func makeToken(identifier interface{}) (tokenData *structure.JwtTokenDetails, err error) {
+func makeToken(identifier int64) (tokenData *structure.JwtTokenDetails, err error) {
 	jwt := jwtLibrary.NewJWT()
 	return jwt.GenerateJwtToken(identifier)
 }

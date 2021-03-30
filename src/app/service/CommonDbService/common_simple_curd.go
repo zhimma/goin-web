@@ -40,6 +40,10 @@ func List(where map[string]interface{}, list interface{}) (err error) {
 	err = globalInstance.DB.Where(where).Find(list).Error
 	return err
 }
+func ListByIdSlice(where []int64, list interface{}) (err error) {
+	err = globalInstance.DB.Where(where).Find(list).Error
+	return err
+}
 
 // 创建一条数据
 func InsertOne(data interface{}) (err error) {
