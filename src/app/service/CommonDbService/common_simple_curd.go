@@ -92,6 +92,7 @@ func DetailByMapOrWhere(where []map[string]interface{}, model interface{}) error
 	return globalInstance.DB.Scopes(makeWhere(where)).First(model).Error
 }
 
+// 构造一个where 条件
 func makeWhere(where []map[string]interface{}) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) (DB *gorm.DB) {
 		for _, v := range where {
