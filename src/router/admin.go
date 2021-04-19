@@ -9,6 +9,7 @@ import (
 	"github.com/zhimma/goin-web/app/http/controllers/admin/casbin_auth/role"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/category"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/client_passport"
+	"github.com/zhimma/goin-web/app/http/controllers/admin/managers"
 	"github.com/zhimma/goin-web/app/http/controllers/admin/passport"
 	"github.com/zhimma/goin-web/app/middleware"
 )
@@ -61,14 +62,24 @@ func InitAdminRouter(Router *gin.RouterGroup) {
 	// 角色管理
 	roleRouter := Router.Group("roles").Use(middleware.AdminAuth(), middleware.AdminCasbin())
 	{
-		roleRouter.GET("", role.Index)
-		roleRouter.POST("", role.Store)
-		roleRouter.PUT(":id", role.Update)
+		roleRouter.GET("/", role.Index)
+		roleRouter.POST("/", role.Store)
+		roleRouter.PUT("/:id", role.Update)
 		roleRouter.DELETE(":id", role.Destroy)
 	}
+	// 角色分配权限
 	cabinAuth := Router.Group("role/policy").Use(middleware.AdminAuth())
 	{
 		cabinAuth.POST("/apis", casbin_auth.StoreApiPolicies)
 		cabinAuth.POST("/menus", casbin_auth.StoreMenuPolicies)
+	}
+
+	// 管理员管理
+	managersRouter := Router.Group("managers").Use(middleware.AdminAuth())
+	{
+		managersRouter.GET("/", managers.Index)
+		managersRouter.POST("/", managers.Store)
+		managersRouter.PUT("/:id", managers.Update)
+		managersRouter.DELETE(":id", managers.Destroy)
 	}
 }

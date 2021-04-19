@@ -99,6 +99,10 @@ func addPoliciesWithApis(roleInfo model.Role, apiInfo []model.Api) (result bool,
 		policies = append(policies, []string{strconv.FormatInt(roleInfo.ID, 10), v.Path, v.Method})
 	}
 	c := component.Casbin()
+	success, _ := c.RemoveFilteredPolicy(0, strconv.FormatInt(roleInfo.ID, 10))
+	if !success {
+		return false, errors.New("清理原有权限失败")
+	}
 	result, err = c.AddPolicies(policies)
 	return
 }

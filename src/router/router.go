@@ -11,5 +11,6 @@ func Routers() *gin.Engine {
 	AdminGroup := Router.Group("admin")
 	// 初始化所有的路由
 	InitAdminRouter(AdminGroup)
+	// 初始化所有的路由
 	return Router
 }

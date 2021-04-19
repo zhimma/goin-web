@@ -21,7 +21,7 @@ func Cors() gin.HandlerFunc {
 		cors := []string{
 			"https://127.0.0.1",
 			"http://127.0.0.1",
-			"",
+			"", // 兼容下本地没有cors
 		}
 		for _, v := range cors {
 			if string(origin) == v {

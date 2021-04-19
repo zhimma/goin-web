@@ -6,5 +6,5 @@ import (
 )
 
 func Seeder(db *gorm.DB) {
-	seed.Admin(db)
+	seed.Manager(db)
 }

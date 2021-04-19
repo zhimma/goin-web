@@ -7,11 +7,22 @@ import (
 	"io/ioutil"
 )
 
+type Params struct {
+	Name string `json:"name" form:"name" binding:"required"`
+	Age  int    `json:"age" form:"age" binding:"required"`
+}
+
 func TestList(c *gin.Context) {
 
-	var path = "/Users/zhimma/go/src/goin-web/app/http/controllers"
-	readDir(path, 0)
-	response.Ok(c)
+	//var path = "/Users/zhimma/go/src/goin-web/app/http/controllers"
+	//readDir(path, 0)
+	var params Params
+	if err := c.ShouldBind(&params); err != nil {
+		response.ValidateFail(err.Error(), c)
+		return
+	}
+	response.OkWithData(params, c)
+	return
 }
 func readDir(path string, curHier int) {
 	files, err := ioutil.ReadDir(path)

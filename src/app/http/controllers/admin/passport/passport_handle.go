@@ -3,7 +3,7 @@ package passport
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"github.com/zhimma/goin-web/app/service/adminAuthService"
+	"github.com/zhimma/goin-web/app/service/managerService"
 	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
@@ -12,7 +12,7 @@ import (
 
 // 管理员登陆
 func Login(c *gin.Context) {
-	loginParams := adminAuthService.LoginParams{}
+	loginParams := managerService.LoginParams{}
 	if errs := c.ShouldBind(&loginParams); errs != nil {
 		err, ok := errs.(validator.ValidationErrors)
 		if !ok {
@@ -23,20 +23,20 @@ func Login(c *gin.Context) {
 		return
 	}
 	// 去登陆
-	adminData := model.Admin{}
-	if err := adminAuthService.Login(loginParams, &adminData); err != nil {
+	adminData := model.Manager{}
+	if err := managerService.Login(loginParams, &adminData); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	// 更新登陆时间 登陆次数 客户端ip
-	adminAuthService.UpdateLoginTime(&adminData, c)
+	managerService.UpdateLoginTime(&adminData, c)
 	// 缓存登陆token 和 用户基本信息
-	if err := adminAuthService.AdminGrantTokenAndCache(&adminData); err != nil {
+	if err := managerService.AdminGrantTokenAndCache(&adminData); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 	// 获取缓存信息，准备返回给客户端
-	if data, err := adminAuthService.GetAdminInfoFromCache(adminData.ID); err != nil {
+	if data, err := managerService.GetManagerInfoFromCache(adminData.ID); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	} else {
@@ -48,7 +48,7 @@ func Login(c *gin.Context) {
 // 注册用户
 func Register(c *gin.Context) {
 	// 数据检验
-	var u adminAuthService.RegisterData
+	var u managerService.RegisterData
 	if err := c.ShouldBind(&u); err != nil {
 		// 获取validator.ValidationErrors类型的errors
 		errs, ok := err.(validator.ValidationErrors)
@@ -67,12 +67,12 @@ func Register(c *gin.Context) {
 	checkMap := map[string]interface{}{
 		"Account": u.Account,
 	}
-	if err := adminAuthService.CheckAdminField(checkMap); err != nil {
+	if err := managerService.CheckAdminField(checkMap); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
 
-	if err := adminAuthService.RegisterUser(u, c); err != nil {
+	if err := managerService.RegisterUser(u, c); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}

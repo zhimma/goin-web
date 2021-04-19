@@ -80,6 +80,7 @@ func Update(c *gin.Context) {
 	id, err := strconv.ParseInt(stringId, 10, 64)
 	if err != nil {
 		response.ValidateFail("获取参数id失败", c)
+		return
 	}
 	var apiData = service.ApiParams{}
 	if errs := c.ShouldBind(&apiData); errs != nil {

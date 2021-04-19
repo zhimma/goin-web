@@ -1,15 +1,16 @@
-package adminAuthService
+package managerService
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/zhimma/goin-web/app/service/CommonDbService"
-	"github.com/zhimma/goin-web/database/constant"
 	"github.com/zhimma/goin-web/database/model"
 	"github.com/zhimma/goin-web/database/structure"
 	globalInstance "github.com/zhimma/goin-web/global"
+	"github.com/zhimma/goin-web/global/constant"
 	"github.com/zhimma/goin-web/helper"
 	jwtLibrary "github.com/zhimma/goin-web/library/jwt"
 	"go.uber.org/zap"
@@ -18,12 +19,12 @@ import (
 )
 
 type LoginParams struct {
-	Account  string `json:"account" binding:"required" zh:"账号"`
-	Password string `json:"password" binding:"required" zh:"密码"`
+	Account  string `json:"account" form:"account" binding:"required" zh:"账号"`
+	Password string `json:"password" form:"password" binding:"required" zh:"密码"`
 }
 
 // 登陆认证
-func Login(params LoginParams, data *model.Admin) error {
+func Login(params LoginParams, data *model.Manager) error {
 	mapWhere := map[string]interface{}{
 		"account": params.Account,
 	}
@@ -41,7 +42,7 @@ func Login(params LoginParams, data *model.Admin) error {
 }
 
 // 生成token 并缓存
-func AdminGrantTokenAndCache(data *model.Admin) error {
+func AdminGrantTokenAndCache(data *model.Manager) error {
 	// 获取配置
 	config := globalInstance.BaseConfig.Jwt
 	// 获取token过期时间
@@ -53,7 +54,7 @@ func AdminGrantTokenAndCache(data *model.Admin) error {
 		globalInstance.SystemLog.Error("生成accessToken失败", zap.Any("error", makeTokenErr))
 		return errors.New("生成accessToken失败")
 	}
-	cacheTokenKey := fmt.Sprintf(constant.AdminUserAccessToken, data.ID)
+	cacheTokenKey := fmt.Sprintf(constant.AdminManagerAccessToken, data.ID)
 	cacheTokenError := globalInstance.RedisClient.Set(cacheTokenKey, tokenData.Token, at.Sub(now)).Err()
 	if cacheTokenError != nil {
 		globalInstance.SystemLog.Error("缓存accessToken失败", zap.Any("error", cacheTokenError))
@@ -65,7 +66,7 @@ func AdminGrantTokenAndCache(data *model.Admin) error {
 		globalInstance.SystemLog.Error("缓存用户信息失败「to json」", zap.Any("error", cacheTokenError))
 		return errors.New("缓存用户信息失败「to json」")
 	}
-	cacheInfoKey := fmt.Sprintf(constant.AdminUserInfo, data.ID)
+	cacheInfoKey := fmt.Sprintf(constant.AdminManagerInfo, data.ID)
 	cacheClientInfo := globalInstance.RedisClient.Set(cacheInfoKey, jsonData, at.Sub(now)).Err()
 	if cacheClientInfo != nil {
 		globalInstance.SystemLog.Error("缓存用户信息失败", zap.Any("error", cacheClientInfo))
@@ -81,22 +82,25 @@ func makeToken(identifier int64) (tokenData *structure.JwtTokenDetails, err erro
 }
 
 // 从缓存中获取客户端信息
-func GetAdminInfoFromCache(userId int64) (data map[string]interface{}, err error) {
-	userInfo := model.Admin{}
-	cacheTokenKey := fmt.Sprintf(constant.AdminUserAccessToken, userId)
+func GetManagerInfoFromCache(userId int64) (data map[string]interface{}, err error) {
+	userInfo := model.Manager{}
+	cacheTokenKey := fmt.Sprintf(constant.AdminManagerAccessToken, userId)
 	tokenStringData, getTokenCacheError := globalInstance.RedisClient.Get(cacheTokenKey).Result()
 	if getTokenCacheError != nil {
 		globalInstance.SystemLog.Error("获取accessToken缓存失败", zap.Any("error", getTokenCacheError))
 		return data, errors.New("获取accessToken缓存失败")
 	}
-	cacheInfoKey := fmt.Sprintf(constant.AdminUserInfo, userId)
+	cacheInfoKey := fmt.Sprintf(constant.AdminManagerInfo, userId)
 	userData, cacheClientInfo := globalInstance.RedisClient.Get(cacheInfoKey).Result()
 	if cacheClientInfo != nil {
 		globalInstance.SystemLog.Error("获取用户缓存失败", zap.Any("error", cacheClientInfo))
 		return data, errors.New("获取用户缓存失败")
 	}
 	var resultData = make(map[string]interface{})
-	if err := json.Unmarshal([]byte(userData), &userInfo); err != nil {
+	decoder := json.NewDecoder(bytes.NewReader([]byte(userData)))
+	decoder.UseNumber()
+
+	if err := decoder.Decode(&userInfo); err != nil {
 		return data, errors.New("解析用户缓存失败")
 	}
 	ttl := globalInstance.BaseConfig.Jwt.JwtTtl
@@ -106,12 +110,12 @@ func GetAdminInfoFromCache(userId int64) (data map[string]interface{}, err error
 		"expires_second": ttl,
 	}
 	resultData["tokenInfo"] = tokenInfo
-	resultData["userInfo"] = userInfo
+	resultData["managerInfo"] = userInfo
 	return resultData, nil
 }
 
 // 更新登陆信息
-func UpdateLoginTime(data *model.Admin, c *gin.Context) {
+func UpdateLoginTime(data *model.Manager, c *gin.Context) {
 	data.LoginTimes += 1
 	data.LastLoginAt = time.Now()
 	data.LastLoginIp = c.ClientIP()
@@ -127,6 +131,6 @@ func UpdateLoginTime(data *model.Admin, c *gin.Context) {
 
 // 检查redis中是否存在用户的token
 func AdminUserTokenCheck(tokenInfo *structure.JwtClaims) (string, error) {
-	key := fmt.Sprintf(constant.AdminUserAccessToken, tokenInfo.IDENTIFIER)
+	key := fmt.Sprintf(constant.AdminManagerAccessToken, tokenInfo.IDENTIFIER)
 	return globalInstance.RedisClient.Get(key).Result()
 }

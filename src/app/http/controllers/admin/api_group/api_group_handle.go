@@ -4,25 +4,23 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/zhimma/goin-web/app/service"
-	"github.com/zhimma/goin-web/app/service/CommonDbService"
-	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
 	"github.com/zhimma/goin-web/helper"
 )
 
 func Index(c *gin.Context) {
-	condition := CommonDbService.PageStruct{
+	/*condition := CommonDbService.PageStruct{
 		Page:     1,
 		PageSize: 1,
 		MapWhere: nil,
 	}
 	condition.MapWhere = make(map[string]interface{})
 	condition.MapWhere["status"] = 0
-	var data []model.Admin
+	var data []model.Manager
 	result := CommonDbService.Paginate(condition, &data)
 	response.OkWithData(result, c)
-	return
+	return*/
 }
 
 // 新增api group

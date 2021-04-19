@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-type Admin struct {
+type Manager struct {
 	BaseModel
 	Account     string    `json:"account" gorm:"type:varchar(100);default:'';not null;comment:'账号';index"`
 	Salt        string    `json:"-" gorm:"type:varchar(10);default:'';not null;comment:'盐'"`

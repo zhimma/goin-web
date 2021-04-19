@@ -87,6 +87,20 @@ func DetailByMapWhere(where map[string]interface{}, model interface{}) error {
 	return globalInstance.DB.Where(where).First(model).Error
 }
 
+// 根据条件查询详情
+func DetailByMapOrWhere(where []map[string]interface{}, model interface{}) error {
+	return globalInstance.DB.Scopes(makeWhere(where)).First(model).Error
+}
+
+func makeWhere(where []map[string]interface{}) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) (DB *gorm.DB) {
+		for _, v := range where {
+			DB = db.Or(v)
+		}
+		return DB
+	}
+}
+
 // firstorcreate
 func FirstOrCreate(where map[string]interface{}, model interface{}) error {
 	return globalInstance.DB.FirstOrCreate(model, where).Error

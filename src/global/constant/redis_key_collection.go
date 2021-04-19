@@ -1,11 +1,6 @@
 package constant
 
 const (
-	// 管理后台登陆token key id
-	AdminUserAccessToken string = "admin:user:access_token:%v"
-
-	// 管理后台登陆token key id
-	AdminUserInfo string = "admin:user:info:%v"
 
 	/**
 	 * @key_type    字符串
@@ -13,6 +8,15 @@ const (
 	 * @data        %s 值：用户id
 	 */
 	DEMO_REDIS_KEY_NAME string = "demo:redis_key:name:%s"
+
+	// 管理后台登陆token key 用户id
+	AdminManagerAccessToken string = "admin:manager:access_token:%v"
+
+	// 管理后台登陆token key 用户id
+	AdminManagerInfo string = "admin:manager:info:%v"
+
+	// 管理员的角色列表信息 key 用户id
+	AdminManagerRoleRelation string = "admin.manager_role.relation.%v"
 
 	/**
 	 * @key_type    string

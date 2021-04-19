@@ -4,8 +4,8 @@
 jwt:
   jwt_secret: 'qmPlus'
   jwt_refresh_secret: '123'
-  jwt_ttl: 86400
-  jwt_refresh_ttl: 604800 # 86400*7
+  jwt_ttl: 28640000
+  jwt_refresh_ttl: 60480000 # 86400*7
 
 wechat:
   app_id: ''

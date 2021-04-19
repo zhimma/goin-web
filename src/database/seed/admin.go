@@ -10,8 +10,8 @@ import (
 	"time"
 )
 
-func Admin(db *gorm.DB) {
-	user := model.Admin{
+func Manager(db *gorm.DB) {
+	user := model.Manager{
 		Account:     "zhimma",
 		Salt:        "1256",
 		Password:    "123456",

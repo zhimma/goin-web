@@ -1,4 +1,4 @@
-package adminAuthService
+package managerService
 
 import (
 	"errors"
@@ -20,7 +20,7 @@ type RegisterData struct {
 
 // 检查字段是否存在
 func CheckAdminField(where map[string]interface{}) error {
-	var data model.Admin
+	var data model.Manager
 	err := CommonDbService.DetailByMapWhere(where, &data)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil
@@ -34,7 +34,7 @@ func RegisterUser(params RegisterData, c *gin.Context) error {
 	// 注册用户
 	salt := helper.RandStringBytes(4)
 	password, _ := helper.GenerateHashString(params.Password, salt)
-	data := model.Admin{
+	data := model.Manager{
 		Account:     params.Account,
 		Salt:        salt,
 		Password:    password,

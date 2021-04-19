@@ -12,7 +12,7 @@ import (
 func Migrate(db *gorm.DB) {
 	err := db.AutoMigrate(
 		database.ColumnTypeMean{},
-		model.Admin{},
+		model.Manager{},
 		model.Article{},
 		model.Category{},
 		model.Client{},

@@ -33,7 +33,7 @@ func RedisClient() {
 	if err != nil {
 		globalInstance.SystemLog.Error("redis connect ping failed, err:", zap.Any("err", err))
 	} else {
-		globalInstance.SystemLog.Info("redis connect ping response:", zap.String("pong", pong))
+		globalInstance.SystemLog.Info("redis connect ping response:", zap.Any("pong", pong))
 		globalInstance.RedisClient = client
 	}
 }

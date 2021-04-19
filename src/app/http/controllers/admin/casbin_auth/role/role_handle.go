@@ -1,6 +1,7 @@
 package role
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/zhimma/goin-web/app/service"
@@ -50,32 +51,43 @@ func Store(c *gin.Context) {
 	return
 }
 
+// 更新
 func Update(c *gin.Context) {
 	stringId := c.Param("id")
 	id, err := strconv.ParseInt(stringId, 10, 64)
 	if err != nil {
 		response.ValidateFail("获取参数id失败", c)
-		var roleStoreParams = service.RoleStoreParams{}
-		if errs := c.ShouldBind(&roleStoreParams); errs != nil {
-			err, ok := errs.(validator.ValidationErrors)
-			if !ok {
-				response.FailWithMessage(errs.Error(), c)
-				return
-			}
-			errorMessageBag := helper.RemoveTopStruct(err.Translate(globalInstance.Translator))
-			response.ValidateFail(errorMessageBag[0], c)
-			return
-		}
-		_, err = service.RoleUpdate(roleStoreParams, id)
-		if err != nil {
-			response.FailWithMessage(err.Error(), c)
-			return
-		}
-		response.OkWithMessage("修改成功", c)
 		return
 	}
+	var roleStoreParams = service.RoleStoreParams{}
+	if errs := c.ShouldBind(&roleStoreParams); errs != nil {
+		err, ok := errs.(validator.ValidationErrors)
+		if !ok {
+			response.FailWithMessage(errs.Error(), c)
+			return
+		}
+		errorMessageBag := helper.RemoveTopStruct(err.Translate(globalInstance.Translator))
+		response.ValidateFail(errorMessageBag[0], c)
+		return
+	}
+	_, err = service.RoleUpdate(roleStoreParams, id)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("修改成功", c)
+	return
+
 }
 
+// 删除
 func Destroy(c *gin.Context) {
+	stringId := c.Param("id")
+	id, err := strconv.ParseInt(stringId, 10, 64)
+	if err != nil {
+		response.ValidateFail("获取参数id失败", c)
+		return
+	}
+	fmt.Println(id)
 
 }
