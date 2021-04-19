@@ -2,14 +2,24 @@ package managerService
 
 import (
 	"errors"
+	"fmt"
 	"github.com/zhimma/goin-web/app/service/CommonDbService"
 	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/helper"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
+	"strings"
 	"time"
 )
+
+type IndexParams struct {
+	Page     int    `json:"page" form:"page"`
+	PageSize int    `json:"page_size" form:"page_size" `
+	Account  string `json:"account" form:"account" `
+	Email    string `json:"email" form:"email"`
+	Phone    string `json:"phone" form:"phone"`
+}
 
 type CreateManagerParams struct {
 	Account  string `json:"account" form:"account" binding:"required" zh:"账号"`
@@ -28,6 +38,30 @@ type UpdateManagerParams struct {
 	Phone    string `json:"phone" form:"phone" binding:"required" zh:"手机号码"`
 	Email    string `json:"email" form:"email" binding:"required" zh:"邮箱"`
 	Status   int8   `json:"status" form:"status" binding:"required" zh:"状态"`
+}
+
+// 管理员列表分页
+func ManagerList(params IndexParams) (result CommonDbService.PageResult) {
+	condition := CommonDbService.PageStruct{
+		Page:         params.Page,
+		PageSize:     params.PageSize,
+		MapWhere:     nil,
+		LikeMapWhere: nil,
+	}
+	condition.MapWhere = make(map[string]interface{})
+	if len(params.Account) > 0 {
+		condition.MapWhere["account"] = params.Account
+	}
+	if len(params.Phone) > 0 {
+		condition.LikeMapWhere["phone"] = strings.ToUpper(params.Phone)
+	}
+	if len(params.Email) > 0 {
+		condition.LikeMapWhere["email"] = params.Email
+	}
+	fmt.Println(params)
+	data := make([]model.Manager, 0, condition.PageSize)
+	result = CommonDbService.Paginate(condition, &data)
+	return
 }
 
 // 新增管理员

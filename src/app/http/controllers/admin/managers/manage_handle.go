@@ -12,6 +12,20 @@ import (
 
 // 列表
 func Index(c *gin.Context) {
+	var indexData managerService.IndexParams
+	if errs := c.ShouldBind(&indexData); errs != nil {
+		err, ok := errs.(validator.ValidationErrors)
+		if !ok {
+			response.ValidateFail(errs.Error(), c)
+			return
+		}
+		errorMessageBag := helper.RemoveTopStruct(err.Translate(globalInstance.Translator))
+		response.ValidateFail(errorMessageBag[0], c)
+		return
+	}
+	result := managerService.ManagerList(indexData)
+	response.OkWithData(result, c)
+	return
 }
 
 // 新增api

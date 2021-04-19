@@ -8,8 +8,8 @@ import (
 )
 
 type Params struct {
-	Name string `json:"name" form:"name" binding:"required"`
-	Age  int    `json:"age" form:"age" binding:"required"`
+	Name string `json:"name" form:"name" `
+	Age  int    `json:"age" form:"age"`
 }
 
 func TestList(c *gin.Context) {
