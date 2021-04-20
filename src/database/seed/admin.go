@@ -20,6 +20,7 @@ func Manager(db *gorm.DB) {
 		Name:        "马雄飞",
 		Phone:       "18710830000",
 		Status:      1,
+		IsSuper:     1,
 		LastLoginIp: "127.0.0.1",
 		LastLoginAt: time.Now(),
 		LoginTimes:  0,

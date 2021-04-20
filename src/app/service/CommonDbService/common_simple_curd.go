@@ -54,18 +54,28 @@ func InsertOne(data interface{}) (err error) {
 // 根据id获取详情
 func DetailById(data interface{}, id int64) (err error) {
 	err = globalInstance.DB.First(data, id).Error
+	if err != nil {
+		return err
+	}
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return errors.New("记录不存在")
+	}
 	return err
 }
 
 // 根据id更新
+func UpdateByIdNoCheck(model interface{}, data interface{}) (number int64, err error) {
+	number = globalInstance.DB.Model(model).Updates(data).RowsAffected
+	return number, nil
+}
+
+// 根据id更新
 func UpdateById(model interface{}, id int64, data interface{}) (number int64, err error) {
-	err1 := DetailById(model, id)
-	if err1 != nil {
-		return 0, err1
+	err = DetailById(model, id)
+	if err != nil {
+		return 0, err
 	}
-	if errors.Is(err1, gorm.ErrRecordNotFound) {
-		return 0, errors.New("记录不存在")
-	}
+
 	number = globalInstance.DB.Model(model).Updates(data).RowsAffected
 	return number, nil
 }

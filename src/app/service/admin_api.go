@@ -81,7 +81,7 @@ func ApiUpdate(params ApiParams, id int64) (row int64, err error) {
 		ApiGroupId:  params.ApiGroupId,
 	}
 	originModel := model.Api{}
-	row, err = CommonDbService.UpdateById(&originModel, id, &modelData)
+	row, err = CommonDbService.UpdateById(&originModel, id, modelData)
 	if err != nil {
 		globalInstance.SystemLog.Error("修改api失败", zap.Any("err", err))
 		return 0, errors.New("修改api失败")

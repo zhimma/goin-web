@@ -7,7 +7,6 @@ import (
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
 	"github.com/zhimma/goin-web/helper"
-	"net/http"
 )
 
 // 列表
@@ -28,7 +27,7 @@ func Index(c *gin.Context) {
 	return
 }
 
-// 新增api
+// 新增管理员
 func Store(c *gin.Context) {
 	var params managerService.CreateManagerParams
 	if err := c.ShouldBind(&params); err != nil {
@@ -42,18 +41,13 @@ func Store(c *gin.Context) {
 		return
 	}
 
-	managerId, exist := c.Get("managerId")
-	if !exist {
-		response.Abort(http.StatusInternalServerError, "用户登陆状态获取失败或获取UID出错", c)
-		return
-	}
-	int64ManagerId, ok := managerId.(int64)
-	if !ok {
-		response.Abort(http.StatusInternalServerError, "用户登陆状态获取失败或获取UID出错", c)
+	managerRecord, err := helper.GetCurrentManagerInfo(c)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
 		return
 	}
 
-	if err := managerService.CreateManager(params, int64ManagerId); err != nil {
+	if err := managerService.CreateManager(params, managerRecord.ID); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -61,8 +55,30 @@ func Store(c *gin.Context) {
 	return
 }
 
+func BindRole(c *gin.Context) {
+	var params managerService.BindRoleParams
+	if bindError := c.ShouldBind(&params); bindError != nil {
+		validatorErr, ok := bindError.(validator.ValidationErrors)
+		if !ok {
+			response.FailWithMessage(bindError.Error(), c)
+			return
+		}
+		errorMessageBag := helper.RemoveTopStruct(validatorErr.Translate(globalInstance.Translator))
+		response.ValidateFail(errorMessageBag[0], c)
+		return
+	}
+	err := managerService.BindUserRole(params)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("用户角色绑定成功", c)
+	return
+}
+
 // 查询
 func Show(c *gin.Context) {
+
 }
 
 // 更新
@@ -71,4 +87,44 @@ func Update(c *gin.Context) {
 
 // 删除
 func Destroy(c *gin.Context) {
+}
+
+// 修改密码
+func ChangePassword(c *gin.Context) {
+
+	var params managerService.ChangePasswordParams
+	if bindError := c.ShouldBind(&params); bindError != nil {
+		validatorError, ok := bindError.(validator.ValidationErrors)
+		if !ok {
+			response.FailWithMessage(bindError.Error(), c)
+			return
+		}
+		errorMessageBag := helper.RemoveTopStruct(validatorError.Translate(globalInstance.Translator))
+		response.ValidateFail(errorMessageBag[0], c)
+		return
+	}
+	managerRecord, err := helper.GetCurrentManagerInfo(c)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	// 超管可以修改所有密码 自己只能改自己的密码
+	flag := false
+	if managerRecord.IsSuper == 1 {
+		flag = true
+	} else {
+		if managerRecord.ID == params.ManagerId {
+			flag = true
+		}
+	}
+	if !flag {
+		response.FailWithMessage("没有权限修改", c)
+		return
+	}
+	if err := managerService.ChangePassword(params); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithMessage("密码修改成功", c)
+	return
 }

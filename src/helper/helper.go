@@ -1,7 +1,9 @@
 package helper
 
 import (
+	"errors"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/zhimma/goin-web/database/model"
 	"golang.org/x/crypto/bcrypt"
 	"math/rand"
@@ -71,4 +73,34 @@ func List2Tree(data []model.Category, pk interface{}, pid uint, child interface{
 	}
 	return result
 
+}
+
+func GetCurrentManagerInfo(c *gin.Context) (data model.Manager, err error) {
+	data = model.Manager{}
+	managerInfo, exist := c.Get("managerInfo")
+	if !exist {
+		return data, errors.New("用户登陆状态获取失败或获取UID出错")
+	}
+	userInfo, ok := managerInfo.(model.Manager)
+	if ok {
+		userInfo = managerInfo.(model.Manager)
+	} else {
+		return data, errors.New("用户登陆状态获取失败或获取UID出错")
+	}
+	data.ID = userInfo.ID
+	data.RoleId = userInfo.RoleId
+	data.Account = userInfo.Account
+	data.Salt = userInfo.Salt
+	data.Password = userInfo.Password
+	data.Avatar = userInfo.Avatar
+	data.Name = userInfo.Name
+	data.Phone = userInfo.Phone
+	data.Email = userInfo.Email
+	data.Status = userInfo.Status
+	data.IsSuper = userInfo.IsSuper
+	data.LastLoginIp = userInfo.LastLoginIp
+	data.LastLoginAt = userInfo.LastLoginAt
+	data.LoginTimes = userInfo.LoginTimes
+	data.OperatorId = userInfo.OperatorId
+	return data, nil
 }

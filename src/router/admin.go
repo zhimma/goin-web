@@ -79,7 +79,10 @@ func InitAdminRouter(Router *gin.RouterGroup) {
 	{
 		managersRouter.GET("/", managers.Index)
 		managersRouter.POST("/", managers.Store)
+		managersRouter.POST("/bind/role", managers.BindRole)
 		managersRouter.PUT("/:id", managers.Update)
 		managersRouter.DELETE(":id", managers.Destroy)
+		managersRouter.POST("/change/password", managers.ChangePassword)
+
 	}
 }
