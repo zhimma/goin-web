@@ -15,9 +15,6 @@ const (
 	// 管理后台登陆token key 用户id
 	AdminManagerInfo string = "admin:manager:info:%v"
 
-	// 管理员的角色列表信息 key 用户id
-	AdminManagerRoleRelation string = "admin.manager_role.relation.%v"
-
 	/**
 	 * @key_type    string
 	 * @description 管理员用户信息
