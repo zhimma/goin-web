@@ -1,6 +1,7 @@
 package component
 
 import (
+	"fmt"
 	"github.com/go-redis/redis"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"go.uber.org/zap"
@@ -12,9 +13,10 @@ func RedisClient() {
 		// ork:            "",
 		Addr: redisConfig.Addr,
 		// Dialer:             nil,
-		// OnConnect:          nil,
-		Password: redisConfig.Password,
-		DB:       redisConfig.Db,
+		OnConnect: OnConnect,
+		Password:  redisConfig.Password,
+		DB:        redisConfig.Db,
+		PoolSize:  100, // 连接池大小
 		//MaxRetries:         0,
 		//MinRetryBackoff:    0,
 		//MaxRetryBackoff:    0,
@@ -36,4 +38,10 @@ func RedisClient() {
 		globalInstance.SystemLog.Info("redis connect ping response:", zap.Any("pong", pong))
 		globalInstance.RedisClient = client
 	}
+
+}
+func OnConnect(conn *redis.Conn) error {
+	fmt.Println("redis on connect")
+	globalInstance.RedisClientNum += 1
+	return nil
 }

@@ -10,10 +10,11 @@ import (
 )
 
 var (
-	BaseConfig  config.Base
-	SystemLog   *zap.Logger
-	DB          *gorm.DB
-	Translator  ut.Translator
-	RedisClient *redis.Client
-	UniqueId    *snowflake.Node
+	BaseConfig     config.Base
+	SystemLog      *zap.Logger
+	DB             *gorm.DB
+	Translator     ut.Translator
+	RedisClient    *redis.Client
+	RedisClientNum int64
+	UniqueId       *snowflake.Node
 )

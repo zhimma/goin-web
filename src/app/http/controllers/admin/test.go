@@ -3,8 +3,11 @@ package admin
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/zhimma/goin-web/component"
+	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
 	"io/ioutil"
+	"time"
 )
 
 type Params struct {
@@ -13,7 +16,32 @@ type Params struct {
 }
 
 func TestList(c *gin.Context) {
+	cache := component.NewRedisCache()
+	cache.Set("name", []string{"maxsf"}, 0)
+	err := cache.Set("age", 22, 10*time.Second)
+	fmt.Println(err)
+	var age int
+	err = cache.Get("age", &age)
+	fmt.Println(age, err)
+	type person struct {
+		Name string
+		Age  int
+	}
+	p := person{
+		Name: "zhimma",
+		Age:  30,
+	}
 
+	fmt.Println("client_num", globalInstance.RedisClientNum)
+
+	cache.Set("p", p, 0)
+	res := person{}
+	err = cache.Get("p", &res)
+	fmt.Println(res, err)
+
+	var data []string
+	err = cache.Get("name", &data)
+	fmt.Println(data, err)
 	//var path = "/Users/zhimma/go/src/goin-web/app/http/controllers"
 	//readDir(path, 0)
 	var params Params
