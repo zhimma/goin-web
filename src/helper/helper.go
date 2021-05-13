@@ -84,13 +84,13 @@ func GetCurrentManagerInfo(c *gin.Context) (data model.Manager, err error) {
 	data = model.Manager{}
 	managerInfo, exist := c.Get("managerInfo")
 	if !exist {
-		return data, errors.New("用户登陆状态获取失败或获取UID出错")
+		return data, errors.New("用户登陆状态获取失败或获取UID出错[not exists]")
 	}
 	userInfo, ok := managerInfo.(model.Manager)
 	if ok {
 		userInfo = managerInfo.(model.Manager)
 	} else {
-		return data, errors.New("用户登陆状态获取失败或获取UID出错")
+		return data, errors.New("用户登陆状态获取失败或获取UID出错[type error]")
 	}
 	data.ID = userInfo.ID
 	data.RoleId = userInfo.RoleId

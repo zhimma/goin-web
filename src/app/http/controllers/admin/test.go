@@ -7,6 +7,7 @@ import (
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/response"
 	"io/ioutil"
+	"strconv"
 	"time"
 )
 
@@ -17,7 +18,13 @@ type Params struct {
 
 func TestList(c *gin.Context) {
 	cache := component.NewRedisCache()
-	cache.Set("name", []string{"maxsf"}, 0)
+
+	for i := 0; i <= 1000; i++ {
+		stri := strconv.Itoa(i)
+		cache.Delete("name" + stri)
+		fmt.Println("redis client num", stri, globalInstance.RedisClientNum)
+	}
+
 	err := cache.Set("age", 22, 10*time.Second)
 	fmt.Println(err)
 	var age int

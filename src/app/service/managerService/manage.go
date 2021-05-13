@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/zhimma/goin-web/app/service/CommonDbService"
+	"github.com/zhimma/goin-web/component"
 	"github.com/zhimma/goin-web/database/model"
 	globalInstance "github.com/zhimma/goin-web/global"
 	"github.com/zhimma/goin-web/global/constant"
@@ -240,18 +241,11 @@ func DeleteManager(id int64) (err error) {
 		globalInstance.SystemLog.Error("删除管理员失败", zap.Any("error", err.Error()))
 		return errors.New("删除管理员失败")
 	}
+	cache := component.NewRedisCache()
 	cacheTokenKey1 := fmt.Sprintf(constant.AdminManagerAccessToken, id)
 	cacheTokenKey2 := fmt.Sprintf(constant.AdminManagerInfo, id)
-	_, err = globalInstance.RedisClient.Del(cacheTokenKey1).Result()
-	if err != nil {
-		globalInstance.SystemLog.Error("删除管理员失败-清理redis", zap.Any("error", err.Error()))
-		return errors.New("删除管理员失败")
-	}
-	_, err = globalInstance.RedisClient.Del(cacheTokenKey2).Result()
-	if err != nil {
-		globalInstance.SystemLog.Error("删除管理员失败-清理redis", zap.Any("error", err.Error()))
-		return errors.New("删除管理员失败")
-	}
+	_ = cache.Delete(cacheTokenKey1)
+	_ = cache.Delete(cacheTokenKey2)
 	return nil
 }
 

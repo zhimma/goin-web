@@ -1,9 +1,9 @@
 package service
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/zhimma/goin-web/app/service/CommonDbService"
+	"github.com/zhimma/goin-web/component"
 	"github.com/zhimma/goin-web/database/model"
 	"github.com/zhimma/goin-web/database/structure"
 	globalInstance "github.com/zhimma/goin-web/global"
@@ -59,19 +59,22 @@ func CacheClientInfo(client *model.Client) error {
 		globalInstance.SystemLog.Error("生成token失败", zap.Any("error", makeTokenErr))
 		return makeTokenErr
 	}
+	cache := component.NewRedisCache()
 	cacheTokenKey := fmt.Sprintf(constant.ClientAuthToken, client.ClientId)
-	cacheTokenError := globalInstance.RedisClient.Set(cacheTokenKey, tokenData.Token, at.Sub(now)).Err()
+	// cacheTokenError := globalInstance.RedisClient.Set(cacheTokenKey, tokenData.Token, at.Sub(now)).Err()
+	cacheTokenError := cache.Set(cacheTokenKey, tokenData.Token, at.Sub(now))
 	if cacheTokenError != nil {
 		globalInstance.SystemLog.Error("缓存accessToken失败", zap.Any("error", cacheTokenError))
 		return cacheTokenError
 	}
-	jsonData, err := json.Marshal(client)
+	/*jsonData, err := json.Marshal(client)
 	if err != nil {
 		globalInstance.SystemLog.Error("缓存clientInfo失败「to json」", zap.Any("error", cacheTokenError))
 		return err
-	}
+	}*/
 	cacheInfoKey := fmt.Sprintf(constant.ClientInfo, client.ClientId)
-	cacheClientInfo := globalInstance.RedisClient.Set(cacheInfoKey, jsonData, at.Sub(now)).Err()
+	cacheClientInfo := cache.Set(cacheInfoKey, client, at.Sub(now))
+	// cacheClientInfo := globalInstance.RedisClient.Set(cacheInfoKey, jsonData, at.Sub(now)).Err()
 	if cacheClientInfo != nil {
 		globalInstance.SystemLog.Error("缓存clientInfo失败", zap.Any("error", cacheClientInfo))
 		return cacheClientInfo
@@ -89,21 +92,25 @@ func makeToken(identifier int64) (tokenData *structure.JwtTokenDetails, err erro
 func GetClientInfoFromCache(clientId int64) (data map[string]interface{}, err error) {
 	var clientInfo model.Client
 	cacheTokenKey := fmt.Sprintf(constant.ClientAuthToken, clientId)
-	tokenData, getTokenCacheError := globalInstance.RedisClient.Get(cacheTokenKey).Result()
+	cache := component.NewRedisCache()
+	var tokenData string
+	getTokenCacheError := cache.Get(cacheTokenKey, &tokenData)
+	// tokenData, getTokenCacheError := globalInstance.RedisClient.Get(cacheTokenKey).Result()
 	if getTokenCacheError != nil {
 		globalInstance.SystemLog.Error("获取accessToken缓存失败", zap.Any("error", getTokenCacheError))
 		return data, getTokenCacheError
 	}
 	cacheInfoKey := fmt.Sprintf(constant.ClientInfo, clientId)
-	clientData, cacheClientInfo := globalInstance.RedisClient.Get(cacheInfoKey).Result()
-	if cacheClientInfo != nil {
-		globalInstance.SystemLog.Error("获取clientInfo缓存失败", zap.Any("error", cacheClientInfo))
+	cacheClientInfoErr := cache.Get(cacheInfoKey, &clientInfo)
+	// clientData, cacheClientInfo := globalInstance.RedisClient.Get(cacheInfoKey).Result()
+	if cacheClientInfoErr != nil {
+		globalInstance.SystemLog.Error("获取clientInfo缓存失败", zap.Any("error", clientInfo))
 		return data, getTokenCacheError
 	}
 	var resultData = make(map[string]interface{})
-	if err := json.Unmarshal([]byte(clientData), &clientInfo); err != nil {
+	/*if err := json.Unmarshal([]byte(clientData), &clientInfo); err != nil {
 		return resultData, err
-	}
+	}*/
 	resultData["tokenInfo"] = tokenData
 	resultData["clientInfo"] = clientInfo
 	return resultData, nil
