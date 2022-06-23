@@ -1,0 +1,28 @@
+mysql:
+  read:
+    host: "127.0.0.1"
+    port: "3306"
+    database: "go_gin_api"
+    username: "root"
+    password: "ma123456ma"
+  write:
+    host: "127.0.0.1"
+    port: "3306"
+    database: "go_gin_api"
+    username: "root"
+    password: "ma123456ma"
+  dbBase:
+    maxOpenConn: 60,
+    maxIdleConn: 60,
+    connMaxLifeTime: 10
+
+redis:
+  addr: "127.0.0.1:6379"
+  pass: "123456"
+  db: 10
+  maxRetries: 3
+  poolSize: 10
+  minIdleConns: 5
+
+language:
+  local: "zh-ch"
