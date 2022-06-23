@@ -1,6 +1,6 @@
-src/latest_log
-src/.air.conf
-src/bin
+old/src/latest_log
+old/src/.air.conf
+old/src/bin
 ./.idea
 ./.DS_Store
 */.DS_Store
